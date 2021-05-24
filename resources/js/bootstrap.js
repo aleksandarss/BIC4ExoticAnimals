@@ -11,11 +11,17 @@ import axios from 'axios';
 // Some custom modules to make developing faster
 import Form from './utilities/Form';
 import QueryMessage from './components/base/QueryMessage';
+import TableElement from './components/base/TableElementComponent';
+import ErrorBox from './components/base/ErrorBoxComponent';
+import SuccessBox from './components/base/SuccessBoxComponent';
 
 window._ = lodash;
 window.axios = axios;
 window.QueryMessage = QueryMessage;
 window.Form = Form;
+window.TableElement = TableElement;
+window.ErrorBox = ErrorBox;
+window.SuccessBox = SuccessBox;
 
 // Set token in header for axios to keep requests secure
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

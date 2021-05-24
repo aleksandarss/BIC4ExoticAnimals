@@ -2,9 +2,7 @@
 
 
 @section('content')
-    <section class="section">
-        <div class="container">
-            <h1>List animal</h1>
-        </div>
+    <section class="section is-fullwidth">
+        <example :example="{{ $animal }}"></example>
     </section>
 @endsection

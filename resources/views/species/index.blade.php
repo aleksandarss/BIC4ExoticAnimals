@@ -2,9 +2,7 @@
 
 
 @section('content')
-    <section class="section">
-        <div class="container">
-            <h1>List species</h1>
-        </div>
+    <section class="section is-fullwidth">
+        <species :all-species="{{ $species->load('animals') }}"></species>
     </section>
 @endsection

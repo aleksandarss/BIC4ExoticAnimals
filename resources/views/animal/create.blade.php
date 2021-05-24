@@ -2,9 +2,7 @@
 
 
 @section('content')
-    <section class="section">
-        <div class="container">
-            <h1>Create animal</h1>
-        </div>
+    <section class="section is-fullheight">
+        <animal-form></animal-form>
     </section>
 @endsection
