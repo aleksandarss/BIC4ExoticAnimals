@@ -91,3 +91,14 @@
     height: 100px;
     background-size: cover;
 }
+
+/***SpeciesListComponent.vue styles***/
+.table,
+.box{
+    background-color: white;
+    color: black;
+}
+
+.customHeaderColorSpeciesList{
+    color: $grey;
+}

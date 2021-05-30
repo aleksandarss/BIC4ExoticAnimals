@@ -2121,6 +2121,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -20560,7 +20564,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "container bg-dark text-white" },
+    { staticClass: "container " },
     [
       _c("hero", { attrs: { "main-title": "Species" } }),
       _vm._v(" "),
@@ -20573,10 +20577,25 @@ var render = function() {
               ? _c("success-box", { attrs: { message: _vm.successMessage } })
               : _vm._e(),
             _vm._v(" "),
+            _c(
+              "h1",
+              {
+                staticClass:
+                  "title pb-3 fs-1 customHeaderColorSpeciesList text-center"
+              },
+              [_vm._v(" Species List ")]
+            ),
+            _vm._v(" "),
+            _c("p", { staticClass: "customHeaderColorSpeciesList pb-3 fs-4" }, [
+              _vm._v(
+                "Here you can see and manage all species registered in the database. \n                You have the ability to edit the species or delete them from the database!"
+              )
+            ]),
+            _vm._v(" "),
             _vm.hasSpecies
               ? _c(
                   "div",
-                  { staticClass: "box custom-box" },
+                  { staticClass: "box custom-box " },
                   [
                     _c("species-list", {
                       attrs: { species: _vm.species },
@@ -20586,6 +20605,8 @@ var render = function() {
                   1
                 )
               : _vm._e(),
+            _vm._v(" "),
+            _vm._m(0),
             _vm._v(" "),
             !_vm.hasSpecies
               ? _c("error-box", { attrs: { message: "No species found" } })
@@ -20609,7 +20630,16 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "float-end" }, [
+      _c("a", { attrs: { href: "#" } }, [_vm._v("Back to top")])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -20821,17 +20851,28 @@ var render = function() {
           "tr",
           { staticClass: "title is-6" },
           [
-            _c("table-element", { attrs: { "element-type": "th" } }, [
-              _vm._v("Name")
-            ]),
-            _vm._v(" "),
-            _c("table-element", { attrs: { "element-type": "th" } }, [
-              _vm._v("Description")
-            ]),
+            _c(
+              "table-element",
+              {
+                staticClass: "text-black fs-5",
+                attrs: { "element-type": "th" }
+              },
+              [_vm._v("Name")]
+            ),
             _vm._v(" "),
             _c(
               "table-element",
               {
+                staticClass: "text-black fs-5",
+                attrs: { "element-type": "th" }
+              },
+              [_vm._v("Description")]
+            ),
+            _vm._v(" "),
+            _c(
+              "table-element",
+              {
+                staticClass: "text-black fs-5",
                 attrs: {
                   "element-type": "th",
                   "text-class": "has-text-centered"
@@ -20840,15 +20881,28 @@ var render = function() {
               [_vm._v("Animals")]
             ),
             _vm._v(" "),
-            _c("table-element", { attrs: { "element-type": "th" } }, [
-              _vm._v("Created")
-            ]),
+            _c(
+              "table-element",
+              {
+                staticClass: "text-black fs-5",
+                attrs: { "element-type": "th" }
+              },
+              [_vm._v("Created")]
+            ),
             _vm._v(" "),
-            _c("table-element", { attrs: { "element-type": "th" } }, [
-              _vm._v("Modified")
-            ]),
+            _c(
+              "table-element",
+              {
+                staticClass: "text-black fs-5",
+                attrs: { "element-type": "th" }
+              },
+              [_vm._v("Modified")]
+            ),
             _vm._v(" "),
-            _c("table-element", { attrs: { "element-type": "th" } })
+            _c("table-element", {
+              staticClass: "text-black fs-5",
+              attrs: { "element-type": "th" }
+            })
           ],
           1
         )

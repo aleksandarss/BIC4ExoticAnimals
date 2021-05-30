@@ -3,12 +3,12 @@
         <table class="table is-fullwidth is-hoverable">
             <thead>
                 <tr class="title is-6">
-                    <table-element element-type="th">Name</table-element>
-                    <table-element element-type="th">Description</table-element>
-                    <table-element element-type="th" text-class="has-text-centered">Animals</table-element>
-                    <table-element element-type="th">Created</table-element>
-                    <table-element element-type="th">Modified</table-element>
-                    <table-element element-type="th"></table-element>
+                    <table-element element-type="th" class="text-black fs-5">Name</table-element>
+                    <table-element element-type="th" class="text-black fs-5">Description</table-element>
+                    <table-element element-type="th" class="text-black fs-5" text-class="has-text-centered">Animals</table-element>
+                    <table-element element-type="th" class="text-black fs-5">Created</table-element>
+                    <table-element element-type="th" class="text-black fs-5">Modified</table-element>
+                    <table-element element-type="th" class="text-black fs-5"></table-element>
                 </tr>
             </thead>
             <tbody>
