@@ -11762,3 +11762,54 @@ label.panel-block:hover {
   min-height: calc(100vh - 6.75rem);
 }
 
+.box .custom-box {
+  margin-left: auto;
+  margin-right: auto;
+  flex: none;
+  /* width: 60%; */
+}
+
+.column.is-offset-one-fifth,
+.column.is-offset-one-fifth-tablet {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.column.is-three-fifths,
+.column.is-three-fifths-tablet {
+  flex: none;
+  /* width: 60%; */
+}
+
+/***----CUSTOMIZED STYLES----***/
+
+/****Custom Welcome-page style****/
+
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background-color: #333;
+  text-shadow: none;
+  /* Prevent inheritance from `body` */
+}
+
+.customHeaderColorForWelcomePage {
+  color: rgba(218, 218, 12, 0.527);
+}
+
+/***app.blade.php -Application customized styles***/
+
+.customMainBackgroundColor {
+  background-color: rgba(128, 128, 0, 0.527);
+}
+
+.customFontColor {
+  color: #4a5762;
+}
+
+.img {
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+}
+

@@ -1,8 +1,8 @@
 <template>
-    <div class="container">
+    <div class="container bg-dark text-white">
         <hero main-title="Species"></hero>
         <div class="columns is-multiline">
-            <div class="column is-three-fifths is-offset-one-fifth">
+            <div class="column">
                 <success-box :message="successMessage" v-if="showSuccessMessage"></success-box>
                 <div class="box custom-box" v-if="hasSpecies">
                     <species-list :species="species" v-on:open-modal="setModal"></species-list>
