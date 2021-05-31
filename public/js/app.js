@@ -2122,6 +2122,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+var getSpecies = function getSpecies() {
+  return new Promise(function (resolve, reject) {
+    axios.get('/list/species').then(function (response) {
+      console.log("LOADED SPECIES: ", response);
+      resolve(response.data);
+    })["catch"](function (err) {
+      console.error("Something went wrong while fetching species: ", err);
+      reject(err);
+    });
+  });
+};
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     SpeciesList: _SpeciesListComponent__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -2140,12 +2153,6 @@ __webpack_require__.r(__webpack_exports__);
       modalId: 0,
       successMessage: ''
     };
-  },
-  props: {
-    allSpecies: {
-      type: Array,
-      required: true
-    }
   },
   methods: {
     toggleModal: function toggleModal(info) {
@@ -2169,7 +2176,14 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.species = this.allSpecies;
+    var _this = this;
+
+    getSpecies().then(function (species) {
+      _this.species = species;
+    })["catch"](function (err) {
+      return console.error(err);
+    });
+    console.log("SPECIES ARE: ", this.species);
   },
   computed: {
     hasSpecies: function hasSpecies() {
@@ -2236,13 +2250,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 var form = new Form({
   'species_id': '',
   'name': '',
   'description': ''
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "BlogFormComponent",
+  name: "SpeciesFormComponent",
   components: {
     QueryMessage: QueryMessage
   },
@@ -2275,6 +2290,7 @@ var form = new Form({
         _this.form.description = response.description;
         _this.form.noReset = ['species_id', 'name', 'description'];
         _this.edit = true;
+        console.log("MESSAGE: ", _this.form);
         window.history.pushState("", "", _this.url);
       });
     }
@@ -2350,6 +2366,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpeciesListComponent",
+  data: function data() {
+    return {
+      species: getSpecies()
+    };
+  },
   props: {
     species: {
       required: true
@@ -2365,6 +2386,77 @@ __webpack_require__.r(__webpack_exports__);
         title: species.name,
         content: 'Do you really want to delete this species?',
         url: '/species/' + species.slug
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/base/DeleteComponent.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/base/DeleteComponent.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "DeleteModalComponent",
+  props: {
+    title: {
+      required: true,
+      type: String
+    },
+    content: {
+      required: true,
+      type: String
+    },
+    active: {
+      required: true,
+      type: Boolean
+    },
+    deleteUrl: {
+      required: true,
+      type: String
+    },
+    entryId: {
+      required: true,
+      type: Number
+    }
+  },
+  methods: {
+    closeModal: function closeModal(message) {
+      this.$emit('close-modal', message);
+    },
+    callDeleteLink: function callDeleteLink() {
+      var _this = this;
+
+      axios["delete"](this.deleteUrl).then(function (response) {
+        return _this.closeModal({
+          id: _this.entryId,
+          message: response.data.message
+        });
       });
     }
   }
@@ -20856,23 +20948,23 @@ var render = function() {
       _vm._v(" "),
       _c(
         "tbody",
-        _vm._l(_vm.species, function(species) {
+        _vm._l(_vm.species, function(specimen) {
           return _c(
             "tr",
-            { key: species.id },
+            { key: specimen.id },
             [
               _c("table-element", { attrs: { "element-type": "td" } }, [
                 _c("a", {
                   attrs: {
-                    href: "/species/" + species.slug,
-                    title: species.name
+                    href: "/species/" + specimen.slug,
+                    title: specimen.name
                   },
-                  domProps: { textContent: _vm._s(species.name) }
+                  domProps: { textContent: _vm._s(specimen.name) }
                 })
               ]),
               _vm._v(" "),
               _c("table-element", { attrs: { "element-type": "td" } }, [
-                _vm._v(_vm._s(species.description))
+                _vm._v(_vm._s(specimen.description))
               ]),
               _vm._v(" "),
               _c(
@@ -20883,18 +20975,18 @@ var render = function() {
                     "text-class": "has-text-centered"
                   }
                 },
-                [_vm._v(_vm._s(species.animals.length))]
+                [_vm._v(_vm._s(specimen.animals.length))]
               ),
               _vm._v(" "),
               _c("table-element", { attrs: { "element-type": "td" } }, [
                 _vm._v(
-                  _vm._s(_vm._f("moment")(species.created_at, "DD.MM.YYYY"))
+                  _vm._s(_vm._f("moment")(specimen.created_at, "DD.MM.YYYY"))
                 )
               ]),
               _vm._v(" "),
               _c("table-element", { attrs: { "element-type": "td" } }, [
                 _vm._v(
-                  _vm._s(_vm._f("moment")(species.updated_at, "DD.MM.YYYY"))
+                  _vm._s(_vm._f("moment")(specimen.updated_at, "DD.MM.YYYY"))
                 )
               ]),
               _vm._v(" "),
@@ -20904,7 +20996,7 @@ var render = function() {
                     "a",
                     {
                       staticClass: "button is-info is-outlined is-small",
-                      attrs: { href: "/species/" + species.slug + "/edit" }
+                      attrs: { href: "/species/" + specimen.slug + "/edit" }
                     },
                     [
                       _c("span", { staticClass: "icon" }, [
@@ -20913,24 +21005,23 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
-                  !species.animals.length
-                    ? _c(
-                        "button",
-                        {
-                          staticClass: "button is-danger is-outlined is-small",
-                          on: {
-                            click: function($event) {
-                              return _vm.openDeleteModal(species)
-                            }
-                          }
-                        },
-                        [
-                          _c("span", { staticClass: "icon" }, [
-                            _c("i", { staticClass: "fa fa-remove" })
-                          ])
-                        ]
-                      )
-                    : _vm._e()
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button is-danger is-outlined is-small",
+                      attrs: { disabled: specimen.animals.length > 0 },
+                      on: {
+                        click: function($event) {
+                          return _vm.openDeleteModal(specimen)
+                        }
+                      }
+                    },
+                    [
+                      _c("span", { staticClass: "icon" }, [
+                        _c("i", { staticClass: "fa fa-remove" })
+                      ])
+                    ]
+                  )
                 ])
               ])
             ],
@@ -20941,6 +21032,82 @@ var render = function() {
       )
     ])
   ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/base/DeleteComponent.vue?vue&type=template&id=19aab2ff&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/base/DeleteComponent.vue?vue&type=template&id=19aab2ff&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "modal", class: _vm.active ? "is-active" : "" },
+    [
+      _c("div", { staticClass: "modal-background" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "modal-card" }, [
+        _c("header", { staticClass: "modal-card-head" }, [
+          _c("p", { staticClass: "modal-card-title" }, [
+            _vm._v(_vm._s(_vm.title))
+          ]),
+          _vm._v(" "),
+          _c("button", {
+            staticClass: "delete",
+            attrs: { "aria-label": "close" },
+            on: {
+              click: function($event) {
+                return _vm.closeModal({ id: 0 })
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "modal-card-body" }, [
+          _vm._v("\n            " + _vm._s(_vm.content) + "\n        ")
+        ]),
+        _vm._v(" "),
+        _c("footer", { staticClass: "modal-card-foot" }, [
+          _c(
+            "button",
+            {
+              staticClass: "button is-danger",
+              on: { click: _vm.callDeleteLink }
+            },
+            [_vm._v("Delete")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "button",
+              on: {
+                click: function($event) {
+                  return _vm.closeModal({ id: 0 })
+                }
+              }
+            },
+            [_vm._v("Cancel")]
+          )
+        ])
+      ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -33307,6 +33474,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_base_TableElementComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/base/TableElementComponent */ "./resources/js/components/base/TableElementComponent.vue");
 /* harmony import */ var _components_base_ErrorBoxComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/base/ErrorBoxComponent */ "./resources/js/components/base/ErrorBoxComponent.vue");
 /* harmony import */ var _components_base_SuccessBoxComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/base/SuccessBoxComponent */ "./resources/js/components/base/SuccessBoxComponent.vue");
+/* harmony import */ var _components_base_DeleteComponent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/base/DeleteComponent */ "./resources/js/components/base/DeleteComponent.vue");
 /**
  * Load all needed JavaScript modules for working with ajax-requests and some
  * base compulsory functions for using data objects.
@@ -33321,13 +33489,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 window._ = lodash__WEBPACK_IMPORTED_MODULE_0___default.a;
 window.axios = axios__WEBPACK_IMPORTED_MODULE_1___default.a;
 window.QueryMessage = _components_base_QueryMessage__WEBPACK_IMPORTED_MODULE_3__["default"];
 window.Form = _utilities_Form__WEBPACK_IMPORTED_MODULE_2__["default"];
 window.TableElement = _components_base_TableElementComponent__WEBPACK_IMPORTED_MODULE_4__["default"];
 window.ErrorBox = _components_base_ErrorBoxComponent__WEBPACK_IMPORTED_MODULE_5__["default"];
-window.SuccessBox = _components_base_SuccessBoxComponent__WEBPACK_IMPORTED_MODULE_6__["default"]; // Set token in header for axios to keep requests secure
+window.SuccessBox = _components_base_SuccessBoxComponent__WEBPACK_IMPORTED_MODULE_6__["default"];
+window.DeleteModal = _components_base_DeleteComponent__WEBPACK_IMPORTED_MODULE_7__["default"]; // Set token in header for axios to keep requests secure
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 var token = document.head.querySelector('meta[name="csrf-token"]');
@@ -33696,6 +33866,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpeciesListComponent_vue_vue_type_template_id_4ac3d58e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpeciesListComponent_vue_vue_type_template_id_4ac3d58e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/base/DeleteComponent.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/base/DeleteComponent.vue ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _DeleteComponent_vue_vue_type_template_id_19aab2ff_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DeleteComponent.vue?vue&type=template&id=19aab2ff&scoped=true& */ "./resources/js/components/base/DeleteComponent.vue?vue&type=template&id=19aab2ff&scoped=true&");
+/* harmony import */ var _DeleteComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DeleteComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/base/DeleteComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DeleteComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DeleteComponent_vue_vue_type_template_id_19aab2ff_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _DeleteComponent_vue_vue_type_template_id_19aab2ff_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "19aab2ff",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/base/DeleteComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/base/DeleteComponent.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/base/DeleteComponent.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./DeleteComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/base/DeleteComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/base/DeleteComponent.vue?vue&type=template&id=19aab2ff&scoped=true&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/base/DeleteComponent.vue?vue&type=template&id=19aab2ff&scoped=true& ***!
+  \*****************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteComponent_vue_vue_type_template_id_19aab2ff_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./DeleteComponent.vue?vue&type=template&id=19aab2ff&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/base/DeleteComponent.vue?vue&type=template&id=19aab2ff&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteComponent_vue_vue_type_template_id_19aab2ff_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteComponent_vue_vue_type_template_id_19aab2ff_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

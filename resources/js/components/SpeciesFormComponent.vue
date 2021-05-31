@@ -8,7 +8,8 @@
                 <div class="card-content">
                     <div class="content">
                         <query-message :success="form.isSuccess()" :fail="form.isFail()"
-                                       :message="form.failMessage || form.successMessage"></query-message>
+                                       :message="form.failMessage || form.successMessage">
+                        </query-message>
                         <form @submit.prevent="submit">
                             <div class="field" v-if="!edit">
                                 <label class="label" for="name">Name</label>
@@ -50,7 +51,7 @@
     });
 
     export default {
-        name: "BlogFormComponent",
+        name: "SpeciesFormComponent",
         components: {
             QueryMessage
         },
@@ -91,8 +92,10 @@
 
                             this.edit = true;
 
+                            console.log("MESSAGE: ", this.form);
                             window.history.pushState("", "", this.url);
                         });
+                
             }
         },
         created() {
