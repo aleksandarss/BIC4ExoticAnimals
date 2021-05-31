@@ -23,7 +23,7 @@
             SpeciesList,
             ErrorBox,
             SuccessBox,
-            // DeleteModal
+            DeleteModal
         },
         name: "SpeciesComponent",
         data() {
