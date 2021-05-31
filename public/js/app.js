@@ -1899,164 +1899,6 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalFormComponent.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AnimalFormComponent.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var form = new Form({
-  'animal_id': '',
-  'name': '',
-  'description': '',
-  'species_id': '',
-  'noReset': ['species_id']
-});
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: "AnimalFormComponent",
-  components: {
-    QueryMessage: QueryMessage
-  },
-  props: {
-    isEditable: {
-      required: false,
-      type: Boolean,
-      "default": false
-    },
-    currentAnimal: {
-      required: false,
-      type: Object
-    }
-  },
-  data: function data() {
-    return {
-      edit: undefined,
-      form: form,
-      url: '',
-      categories: [],
-      noCategories: false
-    };
-  },
-  methods: {
-    submit: function submit() {
-      var _this = this;
-
-      if (this.edit) this.form.put(this.url);else this.form.post(this.url).then(function (response) {
-        _this.url = '/animal/' + response.slug;
-        _this.form.animal_id = response.animal_id;
-        _this.form.name = response.name;
-        _this.form.description = response.description;
-        _this.form.species_id = response.species_id;
-        _this.form.noReset = ['animal_id', 'name', 'description', 'species_id'];
-        _this.edit = true;
-        window.history.pushState("", "", _this.url);
-      });
-    }
-  },
-  created: function created() {
-    var _this2 = this;
-
-    axios.get('/list/species').then(function (response) {
-      _this2.species = response.data;
-      if (_this2.loading) _this2.noCategories = true;
-    });
-    this.edit = this.isEditable;
-
-    if (this.edit) {
-      this.url = '/animal/' + this.currentAnimal.slug;
-      this.form.animal_id = this.currentAnimal.id;
-      this.form.name = this.currentAnimal.name;
-      this.form.description = this.currentAnimal.description;
-      this.form.species_id = this.currentAnimal.species_id;
-      this.form.noReset = ['animal_id', 'name', 'description', 'species_id'];
-    } else {
-      this.url = '/animal';
-    }
-  },
-  computed: {
-    loading: function loading() {
-      return !this.species.length;
-    }
-  },
-  watch: {
-    species: function species() {
-      if (!this.loading && this.form.species_id === '') {
-        this.form.species_id = _.first(this.species).id;
-      }
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
@@ -2325,33 +2167,6 @@ var form = new Form({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -20324,306 +20139,6 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalFormComponent.vue?vue&type=template&id=f0d6c13c&scoped=true&":
-/*!**********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AnimalFormComponent.vue?vue&type=template&id=f0d6c13c&scoped=true& ***!
-  \**********************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "columns is-multiline" }, [
-      _c(
-        "div",
-        {
-          staticClass: "card animal-card column is-half is-offset-one-quarter"
-        },
-        [
-          _c("header", { staticClass: "card-header" }, [
-            _c("h1", {
-              staticClass: "card-header-title is-centered",
-              domProps: {
-                textContent: _vm._s(_vm.edit ? _vm.form.title : "New animal")
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-content" }, [
-            _c(
-              "div",
-              { staticClass: "content" },
-              [
-                _c("query-message", {
-                  attrs: {
-                    success: _vm.form.isSuccess(),
-                    fail: _vm.form.isFail(),
-                    message: _vm.form.failMessage || _vm.form.successMessage
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "form",
-                  {
-                    on: {
-                      submit: function($event) {
-                        $event.preventDefault()
-                        return _vm.submit($event)
-                      }
-                    }
-                  },
-                  [
-                    !_vm.edit
-                      ? _c("div", { staticClass: "field" }, [
-                          _c(
-                            "label",
-                            { staticClass: "label", attrs: { for: "name" } },
-                            [_vm._v("Name")]
-                          ),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "control" }, [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.form.name,
-                                  expression: "form.name"
-                                }
-                              ],
-                              staticClass: "input",
-                              class: {
-                                "is-danger": _vm.form.errors.has("name")
-                              },
-                              attrs: {
-                                id: "name",
-                                type: "text",
-                                autofocus: ""
-                              },
-                              domProps: { value: _vm.form.name },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.form,
-                                    "name",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _vm.form.errors.has("name")
-                            ? _c("p", {
-                                staticClass: "help is-danger",
-                                domProps: {
-                                  textContent: _vm._s(
-                                    _vm.form.errors.get("name")
-                                  )
-                                }
-                              })
-                            : _vm._e()
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "field" }, [
-                      _c(
-                        "label",
-                        { staticClass: "label", attrs: { for: "species" } },
-                        [_vm._v("Species")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "control" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "select is-fullwidth",
-                            class: _vm.loading ? "is-loading" : ""
-                          },
-                          [
-                            _c(
-                              "select",
-                              {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.form.category_id,
-                                    expression: "form.category_id"
-                                  }
-                                ],
-                                attrs: {
-                                  id: "category",
-                                  disabled: _vm.loading
-                                },
-                                on: {
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.$set(
-                                      _vm.form,
-                                      "category_id",
-                                      $event.target.multiple
-                                        ? $$selectedVal
-                                        : $$selectedVal[0]
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _vm.loading
-                                  ? _c(
-                                      "option",
-                                      {
-                                        domProps: {
-                                          value: this.form.category_id
-                                        }
-                                      },
-                                      [_vm._v(" Loading...")]
-                                    )
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                _vm._l(_vm.categories, function(cat) {
-                                  return !_vm.loading
-                                    ? _c("option", {
-                                        domProps: {
-                                          value: cat.id,
-                                          textContent: _vm._s(cat.name)
-                                        }
-                                      })
-                                    : _vm._e()
-                                })
-                              ],
-                              2
-                            )
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _vm.form.errors.has("category_id")
-                        ? _c("p", {
-                            staticClass: "help is-danger",
-                            domProps: {
-                              textContent: _vm._s(
-                                _vm.form.errors.get("category_id")
-                              )
-                            }
-                          })
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.noCategories
-                        ? _c("p", { staticClass: "help is-warning" }, [
-                            _vm._v("Add some categories to create animals!")
-                          ])
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "field" }, [
-                      _c(
-                        "label",
-                        { staticClass: "label", attrs: { for: "body" } },
-                        [_vm._v("Body")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "control" }, [
-                        _c("textarea", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.form.body,
-                              expression: "form.body"
-                            }
-                          ],
-                          staticClass: "textarea",
-                          attrs: { id: "body" },
-                          domProps: { value: _vm.form.body },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.form, "body", $event.target.value)
-                            }
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _vm.form.errors.has("body")
-                        ? _c("p", {
-                            staticClass: "help is-danger",
-                            domProps: {
-                              textContent: _vm._s(_vm.form.errors.get("body"))
-                            }
-                          })
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm._m(0)
-                    ]),
-                    _vm._v(" "),
-                    _c("button", {
-                      staticClass:
-                        "button is-large is-primary is-outlined is-fullwidth",
-                      attrs: { type: "submit", disabled: _vm.loading },
-                      domProps: {
-                        textContent: _vm._s(_vm.edit ? "Save" : "Post")
-                      }
-                    })
-                  ]
-                )
-              ],
-              1
-            )
-          ])
-        ]
-      )
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "help" }, [
-      _vm._v("\n                                You can use "),
-      _c(
-        "a",
-        {
-          attrs: {
-            target: "_blank",
-            href: "https://daringfireball.net/projects/markdown/syntax"
-          }
-        },
-        [_vm._v("\n                                Markdown")]
-      ),
-      _vm._v(" syntax here.\n                            ")
-    ])
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&":
 /*!*******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e& ***!
@@ -20784,7 +20299,10 @@ var render = function() {
     _c("div", { staticClass: "columns is-multiline" }, [
       _c(
         "div",
-        { staticClass: "card blog-card column is-half is-offset-one-quarter" },
+        {
+          staticClass:
+            "card blog-card column is-half is-offset-one-quarter bg-dark"
+        },
         [
           _c("header", { staticClass: "card-header" }, [
             _c("h1", {
@@ -20878,7 +20396,10 @@ var render = function() {
                     _c("div", { staticClass: "field" }, [
                       _c(
                         "label",
-                        { staticClass: "label", attrs: { for: "description" } },
+                        {
+                          staticClass: "label text-white",
+                          attrs: { for: "description" }
+                        },
                         [_vm._v("Description")]
                       ),
                       _vm._v(" "),
@@ -20970,28 +20491,17 @@ var render = function() {
           "tr",
           { staticClass: "title is-6" },
           [
-            _c(
-              "table-element",
-              {
-                staticClass: "text-black fs-5",
-                attrs: { "element-type": "th" }
-              },
-              [_vm._v("Name")]
-            ),
+            _c("table-element", { attrs: { "element-type": "th" } }, [
+              _vm._v("Name")
+            ]),
+            _vm._v(" "),
+            _c("table-element", { attrs: { "element-type": "th" } }, [
+              _vm._v("Description")
+            ]),
             _vm._v(" "),
             _c(
               "table-element",
               {
-                staticClass: "text-black fs-5",
-                attrs: { "element-type": "th" }
-              },
-              [_vm._v("Description")]
-            ),
-            _vm._v(" "),
-            _c(
-              "table-element",
-              {
-                staticClass: "text-black fs-5",
                 attrs: {
                   "element-type": "th",
                   "text-class": "has-text-centered"
@@ -21000,28 +20510,15 @@ var render = function() {
               [_vm._v("Animals")]
             ),
             _vm._v(" "),
-            _c(
-              "table-element",
-              {
-                staticClass: "text-black fs-5",
-                attrs: { "element-type": "th" }
-              },
-              [_vm._v("Created")]
-            ),
+            _c("table-element", { attrs: { "element-type": "th" } }, [
+              _vm._v("Created")
+            ]),
             _vm._v(" "),
-            _c(
-              "table-element",
-              {
-                staticClass: "text-black fs-5",
-                attrs: { "element-type": "th" }
-              },
-              [_vm._v("Modified")]
-            ),
+            _c("table-element", { attrs: { "element-type": "th" } }, [
+              _vm._v("Modified")
+            ]),
             _vm._v(" "),
-            _c("table-element", {
-              staticClass: "text-black fs-5",
-              attrs: { "element-type": "th" }
-            })
+            _c("table-element", { attrs: { "element-type": "th" } })
           ],
           1
         )
@@ -21029,174 +20526,87 @@ var render = function() {
       _vm._v(" "),
       _c(
         "tbody",
-        [
-          _vm._v("\n<<<<<<< HEAD\n                "),
-          _vm._l(_vm.species, function(species) {
-            return _c(
-              "tr",
-              { key: species.id },
-              [
-                _c("table-element", { attrs: { "element-type": "td" } }, [
-                  _c("a", {
-                    attrs: {
-                      href: "/species/" + species.slug,
-                      title: species.name
-                    },
-                    domProps: { textContent: _vm._s(species.name) }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("table-element", { attrs: { "element-type": "td" } }, [
-                  _vm._v(_vm._s(species.description))
-                ]),
-                _vm._v(" "),
-                _c(
-                  "table-element",
-                  {
-                    attrs: {
-                      "element-type": "td",
-                      "text-class": "has-text-centered"
-                    }
+        _vm._l(_vm.species, function(specimen) {
+          return _c(
+            "tr",
+            { key: specimen.id },
+            [
+              _c("table-element", { attrs: { "element-type": "td" } }, [
+                _c("a", {
+                  attrs: {
+                    href: "/species/" + specimen.slug,
+                    title: specimen.name
                   },
-                  [_vm._v(_vm._s(species.animals.length))]
-                ),
-                _vm._v(" "),
-                _c("table-element", { attrs: { "element-type": "td" } }, [
-                  _vm._v(
-                    _vm._s(_vm._f("moment")(species.created_at, "DD.MM.YYYY"))
-                  )
-                ]),
-                _vm._v(" "),
-                _c("table-element", { attrs: { "element-type": "td" } }, [
-                  _vm._v(
-                    _vm._s(_vm._f("moment")(species.updated_at, "DD.MM.YYYY"))
-                  )
-                ]),
-                _vm._v(" "),
-                _c("table-element", { attrs: { "element-type": "td" } }, [
-                  _c("p", { staticClass: "buttons" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "button is-info is-outlined is-small",
-                        attrs: { href: "/species/" + species.slug + "/edit" }
-                      },
-                      [
-                        _c("span", { staticClass: "icon" }, [
-                          _c("i", { staticClass: "fa fa-edit" })
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    !species.animals.length
-                      ? _c(
-                          "button",
-                          {
-                            staticClass:
-                              "button is-danger is-outlined is-small",
-                            on: {
-                              click: function($event) {
-                                return _vm.openDeleteModal(species)
-                              }
-                            }
-                          },
-                          [
-                            _c("span", { staticClass: "icon" }, [
-                              _c("i", { staticClass: "fa fa-remove" })
-                            ])
-                          ]
-                        )
-                      : _vm._e()
-                  ])
-                ])
-              ],
-              1
-            )
-          }),
-          _vm._v("\n=======\n            "),
-          _vm._l(_vm.species, function(specimen) {
-            return _c(
-              "tr",
-              { key: specimen.id },
-              [
-                _c("table-element", { attrs: { "element-type": "td" } }, [
-                  _c("a", {
-                    attrs: {
-                      href: "/species/" + specimen.slug,
-                      title: specimen.name
+                  domProps: { textContent: _vm._s(specimen.name) }
+                })
+              ]),
+              _vm._v(" "),
+              _c("table-element", { attrs: { "element-type": "td" } }, [
+                _vm._v(_vm._s(specimen.description))
+              ]),
+              _vm._v(" "),
+              _c(
+                "table-element",
+                {
+                  attrs: {
+                    "element-type": "td",
+                    "text-class": "has-text-centered"
+                  }
+                },
+                [_vm._v(_vm._s(specimen.animals.length))]
+              ),
+              _vm._v(" "),
+              _c("table-element", { attrs: { "element-type": "td" } }, [
+                _vm._v(
+                  _vm._s(_vm._f("moment")(specimen.created_at, "DD.MM.YYYY"))
+                )
+              ]),
+              _vm._v(" "),
+              _c("table-element", { attrs: { "element-type": "td" } }, [
+                _vm._v(
+                  _vm._s(_vm._f("moment")(specimen.updated_at, "DD.MM.YYYY"))
+                )
+              ]),
+              _vm._v(" "),
+              _c("table-element", { attrs: { "element-type": "td" } }, [
+                _c("p", { staticClass: "buttons" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "button is-info is-outlined ",
+                      attrs: { href: "/species/" + specimen.slug + "/edit" }
                     },
-                    domProps: { textContent: _vm._s(specimen.name) }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("table-element", { attrs: { "element-type": "td" } }, [
-                  _vm._v(_vm._s(specimen.description))
-                ]),
-                _vm._v(" "),
-                _c(
-                  "table-element",
-                  {
-                    attrs: {
-                      "element-type": "td",
-                      "text-class": "has-text-centered"
-                    }
-                  },
-                  [_vm._v(_vm._s(specimen.animals.length))]
-                ),
-                _vm._v(" "),
-                _c("table-element", { attrs: { "element-type": "td" } }, [
-                  _vm._v(
-                    _vm._s(_vm._f("moment")(specimen.created_at, "DD.MM.YYYY"))
-                  )
-                ]),
-                _vm._v(" "),
-                _c("table-element", { attrs: { "element-type": "td" } }, [
-                  _vm._v(
-                    _vm._s(_vm._f("moment")(specimen.updated_at, "DD.MM.YYYY"))
-                  )
-                ]),
-                _vm._v(" "),
-                _c("table-element", { attrs: { "element-type": "td" } }, [
-                  _c("p", { staticClass: "buttons" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "button is-info is-outlined is-small",
-                        attrs: { href: "/species/" + specimen.slug + "/edit" }
-                      },
-                      [
-                        _c("span", { staticClass: "icon" }, [
-                          _c("i", { staticClass: "fa fa-edit" })
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "button is-danger is-outlined is-small",
-                        attrs: { disabled: specimen.animals.length > 0 },
-                        on: {
-                          click: function($event) {
-                            return _vm.openDeleteModal(specimen)
-                          }
+                    [
+                      _c("span", { staticClass: "icon" }, [
+                        _c("i", { staticClass: "fa fa-edit" })
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button is-danger is-outlined",
+                      attrs: { disabled: specimen.animals.length > 0 },
+                      on: {
+                        click: function($event) {
+                          return _vm.openDeleteModal(specimen)
                         }
-                      },
-                      [
-                        _c("span", { staticClass: "icon" }, [
-                          _c("i", { staticClass: "fa fa-remove" })
-                        ])
-                      ]
-                    )
-                  ])
+                      }
+                    },
+                    [
+                      _c("span", { staticClass: "icon" }, [
+                        _c("i", { staticClass: "fa fa-remove" })
+                      ])
+                    ]
+                  )
                 ])
-              ],
-              1
-            )
-          }),
-          _vm._v("\n>>>>>>> origin/master\n            ")
-        ],
-        2
+              ])
+            ],
+            1
+          )
+        }),
+        0
       )
     ])
   ])
@@ -33699,67 +33109,9 @@ document.addEventListener('DOMContentLoaded', function () {
   !*** ./resources/js/components/AnimalFormComponent.vue ***!
   \*********************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _AnimalFormComponent_vue_vue_type_template_id_f0d6c13c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AnimalFormComponent.vue?vue&type=template&id=f0d6c13c&scoped=true& */ "./resources/js/components/AnimalFormComponent.vue?vue&type=template&id=f0d6c13c&scoped=true&");
-/* harmony import */ var _AnimalFormComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AnimalFormComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/AnimalFormComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _AnimalFormComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _AnimalFormComponent_vue_vue_type_template_id_f0d6c13c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _AnimalFormComponent_vue_vue_type_template_id_f0d6c13c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  "f0d6c13c",
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/AnimalFormComponent.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/AnimalFormComponent.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************!*\
-  !*** ./resources/js/components/AnimalFormComponent.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalFormComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./AnimalFormComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalFormComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalFormComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/AnimalFormComponent.vue?vue&type=template&id=f0d6c13c&scoped=true&":
-/*!****************************************************************************************************!*\
-  !*** ./resources/js/components/AnimalFormComponent.vue?vue&type=template&id=f0d6c13c&scoped=true& ***!
-  \****************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalFormComponent_vue_vue_type_template_id_f0d6c13c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./AnimalFormComponent.vue?vue&type=template&id=f0d6c13c&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalFormComponent.vue?vue&type=template&id=f0d6c13c&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalFormComponent_vue_vue_type_template_id_f0d6c13c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalFormComponent_vue_vue_type_template_id_f0d6c13c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
+throw new Error("Module build failed (from ./node_modules/vue-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'C:\\Users\\batuh\\WebDev\\BIC4ExoticAnimals\\resources\\js\\components\\AnimalFormComponent.vue'");
 
 /***/ }),
 

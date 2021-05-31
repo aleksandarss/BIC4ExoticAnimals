@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="columns is-multiline">
-            <div class="card blog-card column is-half is-offset-one-quarter">
+            <div class="card blog-card column is-half is-offset-one-quarter bg-dark">
                 <header class="card-header">
                     <h1 class="card-header-title is-centered" v-text="edit ? form.name : 'New species'"/>
                 </header>
@@ -25,7 +25,7 @@
                             </div>
 
                             <div class="field">
-                                <label class="label" for="description">Description</label>
+                                <label class="label text-white" for="description">Description</label>
                                 <div class="control">
                                     <textarea id="description" v-model="form.description" class="textarea"></textarea>
                                 </div>
