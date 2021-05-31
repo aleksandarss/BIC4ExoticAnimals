@@ -14,6 +14,7 @@ import QueryMessage from './components/base/QueryMessage';
 import TableElement from './components/base/TableElementComponent';
 import ErrorBox from './components/base/ErrorBoxComponent';
 import SuccessBox from './components/base/SuccessBoxComponent';
+import DeleteBox from './components/base/DeleteComponent';
 
 window._ = lodash;
 window.axios = axios;
@@ -22,6 +23,7 @@ window.Form = Form;
 window.TableElement = TableElement;
 window.ErrorBox = ErrorBox;
 window.SuccessBox = SuccessBox;
+window.DeleteModal = DeleteBox;
 
 // Set token in header for axios to keep requests secure
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
