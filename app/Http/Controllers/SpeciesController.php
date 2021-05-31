@@ -47,10 +47,15 @@ class SpeciesController extends Controller
      */
     public function store(Request $request)
     {
-        return Species::create($request->validate([
+        $species = Species::create($request->validate([
             'name' => 'required',
             'description' => 'required'
         ]));
+
+        $species->{"message"} = "Species successfully added!";
+
+        return response($species, 200)
+            ->header('Content-Type', 'application/json');
     }
 
     /**
