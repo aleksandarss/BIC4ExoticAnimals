@@ -3,6 +3,6 @@
 
 @section('content')
     <section class="section is-fullwidth">
-        <example :example="{{ $animal }}"></example>
+        <animals></animals>
     </section>
 @endsection
