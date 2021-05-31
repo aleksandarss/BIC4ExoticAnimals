@@ -44,6 +44,11 @@
 <script>
     export default {
         name: "SpeciesListComponent",
+        data() {
+            return {
+                species: getSpecies()
+            }
+        },
         props: {
             species: {
                 required: true

@@ -22,12 +22,27 @@
 <script>
     import SpeciesList from './SpeciesListComponent';
 
+    const getSpecies = () => {
+        return new Promise((resolve, reject) => {
+            axios.get('/list/species')
+            .then((response) => {
+                console.log("LOADED SPECIES: ", response);
+
+                resolve(response.data);
+            })
+            .catch((err) => {
+                console.error("Something went wrong while fetching species: ", err);
+                reject(err);
+            });
+        });
+    }
+
     export default {
         components:{
             SpeciesList,
             ErrorBox,
             SuccessBox,
-            // DeleteModal
+            DeleteModal
         },
         name: "SpeciesComponent",
         data() {
@@ -41,22 +56,16 @@
                 successMessage: ''
             }
         },
-        props: {
-            allSpecies: {
-                type: Array,
-                required: true
-            }
-        },
         methods: {
-            toggleModal(info) {
+            toggleModal (info) {
                 this.modalActive = !this.modalActive;
 
-                if(info.id !== 0) {
+                if (info.id !== 0) {
                     this.species = _.remove(this.species, cat => cat.id !== info.id);
                     this.successMessage = info.message;
                 }
             },
-            setModal(data) {
+            setModal (data) {
                 this.modalId = data.id;
                 this.modalTitle = data.title;
                 this.modalContent = data.content;
@@ -65,7 +74,12 @@
             }
         },
         created() {
-            this.species = this.allSpecies;
+            getSpecies()
+                .then(species => {
+                    this.species = species;
+                })
+                .catch(err => console.error(err));
+            console.log("SPECIES ARE: ", this.species);
         },
         computed: {
             hasSpecies() {

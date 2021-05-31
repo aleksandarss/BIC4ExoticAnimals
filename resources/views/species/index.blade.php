@@ -3,6 +3,6 @@
 
 @section('content')
     <section class="section is-fullwidth">
-        <species :all-species="{{ $species->load('animals') }}"></species>
+        <species></species>
     </section>
 @endsection
