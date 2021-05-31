@@ -19,34 +19,34 @@
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         
-                        <img src="./img/pexels-Tier1.jpg" class="d-block w-100" alt="Animal1">
+                        <img src="./img/pexels-Tier1.jpg" class="d-block w-100 rounded-pill" alt="Animal1">
                         
-
-                        <div class="container">
-                            <div class="carousel-caption text-start">
-                                <h1>Example headline.</h1>
-                                <p>Some representative placeholder content for the first slide of the carousel.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        
-                        <img src="./img/pexels-Tier2.jpg" class="d-block w-100" alt="Animal2">
 
                         <div class="container">
                             <div class="carousel-caption">
-                                <h1>Another example headline.</h1>
-                                <p>Some representative placeholder content for the second slide of the carousel.</p>
+                                <h1>Banana Joe.</h1>
+                                <p>Joe is eating his banana.</p>
                             </div>
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="./img/pexels-Tier3.jpg" class="d-block w-100" alt="Animal3">  
+                        
+                        <img src="./img/pexels-Tier2.jpg" class="d-block w-100 rounded-pill" alt="Animal2">
 
                         <div class="container">
-                            <div class="carousel-caption text-end">
-                                <h1>One more for good measure.</h1>
-                                <p>Some representative placeholder content for the third slide of this carousel.</p>
+                            <div class="carousel-caption">
+                                <h1>Rickon is posing.</h1>
+                                <p>Rickon is posing is and showing his colors to everyone.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./img/pexels-Tier3.jpg" class="d-block w-100 rounded-pill" alt="Animal3">  
+
+                        <div class="container">
+                            <div class="carousel-caption">
+                                <h1>Spyro is hungry.</h1>
+                                <p>Spyro is looking for his food.</p>
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
             ================================================== -->
             <!-- Wrap the rest of the page in another container to center all the content. -->
 
-            <div class="container marketing mt-5 bg-dark">
+            <div class="container marketing mt-5 customHeaderColorForWelcomePage">
                 <!-- Three columns of text below the carousel -->
                 <div class="row">
                     <div class="col-lg-4 text-center text-white">
