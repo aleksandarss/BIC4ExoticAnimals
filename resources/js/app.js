@@ -20,11 +20,11 @@
  // const files = require.context('./', true, /\.vue$/i)
  // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
  
- Vue.component('example', require('./components/ExampleComponent.vue').default);
  Vue.component('query-message', require('./components/base/QueryMessage.vue').default);
  Vue.component('species', require('./components/SpeciesComponent.vue').default);
  Vue.component('animal-form', require('./components/AnimalFormComponent.vue').default);
  Vue.component('species-form', require('./components/SpeciesFormComponent.vue').default);
+ Vue.component('animals', require('./components/AnimalsListComponent.vue').default);
  
  /**
   * Next, we will create a fresh Vue application instance and attach it to
