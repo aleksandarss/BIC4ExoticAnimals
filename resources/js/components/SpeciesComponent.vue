@@ -1,12 +1,16 @@
 <template>
-    <div class="container">
+    <div class="container ">
         <hero main-title="Species"></hero>
         <div class="columns is-multiline">
-            <div class="column is-three-fifths is-offset-one-fifth">
+            <div class="column">
                 <success-box :message="successMessage" v-if="showSuccessMessage"></success-box>
-                <div class="box custom-box" v-if="hasSpecies">
+                <h1 class="title pb-3 fs-1 customHeaderColorSpeciesList text-center"> Species List </h1>
+                <p class="customHeaderColorSpeciesList pb-3 fs-4">Here you can see and manage all species registered in the database. 
+                    You have the ability to edit the species or delete them from the database!</p>
+                <div class="box custom-box " v-if="hasSpecies">
                     <species-list :species="species" v-on:open-modal="setModal"></species-list>
                 </div>
+                <p class="float-end"><a href="#">Back to top</a></p>
                 <error-box message="No species found" v-if="!hasSpecies"></error-box>
             </div>
         </div>

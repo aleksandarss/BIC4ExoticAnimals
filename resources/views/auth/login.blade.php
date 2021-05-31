@@ -1,14 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+    <h1 class="title pt-5 fs-1 customHeaderColorSpeciesList text-center"> Sign in if you already have an account!</h1>
     <section class="section is-fullheight">
-        <div class="container">
+        <div class="container text-center">
             <div class="columns is-multiline">
                 <div class="card custom-card column is-half is-offset-one-quarter">
                     <header class="card-header">
                         <h1 class="card-header-title is-centered">{{ __('Sign In') }}</h1>
                     </header>
-                    <div class="card-content">
+                    <div class="card-content bg-dark">
                         <div class="content">
                             @if (session('status'))
                                 <article class="message is-success">
@@ -21,7 +22,7 @@
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
                                 <div class="field">
-                                    <label class="label" for="email">Email</label>
+                                    <label class="label text-white text-start" for="email">Email</label>
                                     <div class="control">
                                         <input id="email" title="email" name="email" type="email" required
                                                autocomplete="email" autofocus
@@ -34,7 +35,7 @@
                                 </div>
 
                                 <div class="field">
-                                    <label class="label" for="password">Password</label>
+                                    <label class="label text-white text-start" for="password">Password</label>
                                     <div class="control">
                                         <input id="password" title="password" name="password" type="password" required
                                                autocomplete="current-password"
@@ -50,7 +51,7 @@
                                         <div class="level-item field is-horizontal no-space">
                                             <div class="field-body">
                                                 <div class="field no-space">
-                                                    <div class="control">
+                                                    <div class="control text-white">
                                                         <label class="checkbox">
                                                             <input type="checkbox" name="remember"
                                                                    id="remember"
@@ -82,6 +83,7 @@
                     </div>
                 </div>
             </div>
+            <a class="text-center fs-4" href="{{ route('welcome') }}">Get back to Welcome Page</a>
         </div>
     </section>
 @endsection

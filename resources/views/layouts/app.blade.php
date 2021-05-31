@@ -30,20 +30,26 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://kit.fontawesome.com/41d3d27b67.js" crossorigin="anonymous"></script>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 
+    <!-- Styles -->
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Styles -->
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    
 </head>
 <body>
 <div id="app">
-    <nav class="navbar" role="navigation" aria-label="main navigation">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item" href="{{ route('welcome') }}">
-                <img src="{{asset('img/Logo.png')}}" width="112" height="28">
+                <img src="{{asset('img/Logo.png')}}" width="120" height="30">
             </a>
 
             <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
@@ -57,73 +63,47 @@
         <div id="navbarMain" class="navbar-menu">
             @auth
                 <div class="navbar-start">
-                    <a class="navbar-item {{ request()->routeIs('home') ? 'is-active' : '' }}"
-                       href="{{ route('home') }}">
-                        Home
-                    </a>
-
+                    <a class="navbar-item {{ request()->routeIs('home') ? 'is-active' : '' }} text-white fw-bold bg-dark" href="{{ route('home') }}"><i class="fas fa-home"></i></a>
                     <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link {{ request()->routeIs('animal.index') || request()->routeIs('animal.create') || request()->routeIs('animal.search') ? 'is-active' : '' }}">
-                            Animals
-                        </a>
-
-                        <div class="navbar-dropdown">
-                            <a class="navbar-item {{ request()->routeIs('animal.index') ? 'is-active' : '' }}"
-                               href="{{ route('animal.index') }}">
-                                List
-                            </a>
-                            <a class="navbar-item {{ request()->routeIs('animal.create') ? 'is-active' : '' }}"
-                               href="{{ route('animal.create') }}">
-                                Create
-                            </a>
+                        
+                        <a class="navbar-link {{ request()->routeIs('animal.index') || request()->routeIs('animal.create') || request()->routeIs('animal.search') ? 'is-active' : '' }}  text-white bg-dark"><i class="fas fa-paw me-1"></i> Animals</a>
+                        <div class="navbar-dropdown bg-dark">
+                            <a class="navbar-item {{ request()->routeIs('animal.index') ? 'is-active' : '' }} text-white" href="{{ route('animal.index') }}"><i class="fas fa-list me-1"></i>List</a>
+                            <a class="navbar-item {{ request()->routeIs('animal.create') ? 'is-active' : '' }} text-white" href="{{ route('animal.create') }}"> <i class="fas fa-plus me-1"></i> Create</a>
                             <hr class="navbar-divider">
-                            <a class="navbar-item {{ request()->routeIs('animal.search') ? 'is-active' : '' }}"
-                               href="{{ route('animal.search') }}">
-                                Search
-                            </a>
+                            <a class="navbar-item {{ request()->routeIs('animal.search') ? 'is-active' : '' }} text-white" href="{{ route('animal.search') }}"> <i class="fas fa-search me-1"></i> Search</a>
                         </div>
                     </div>
+                    <div class="navbar-item has-dropdown is-hoverable bg-dark">
+                        <a class="navbar-link {{ request()->routeIs('species.index') || request()->routeIs('species.create') ? 'is-active' : '' }} text-white bg-dark"> <i class="fas fa-microscope me-1"></i>Species</a>
 
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link {{ request()->routeIs('species.index') || request()->routeIs('species.create') ? 'is-active' : '' }}">
-                            Species
-                        </a>
-
-                        <div class="navbar-dropdown">
-                            <a class="navbar-item {{ request()->routeIs('species.index') ? 'is-active' : '' }}"
-                               href="{{ route('species.index') }}">
-                                List
-                            </a>
-                            <a class="navbar-item {{ request()->routeIs('species.create') ? 'is-active' : '' }}"
-                               href="{{ route('species.create') }}">
-                                Create
-                            </a>
+                        <div class="navbar-dropdown bg-dark">
+                            <a class="navbar-item {{ request()->routeIs('species.index') ? 'is-active' : '' }} text-white" href="{{ route('species.index') }}"><i class="fas fa-list me-1"></i>List</a>
+                            <a class="navbar-item {{ request()->routeIs('species.create') ? 'is-active' : '' }} text-white" href="{{ route('species.create') }}"> <i class="fas fa-plus me-1"></i> Create</a>
                         </div>
                     </div>
                 </div>
             @endauth
 
             <div class="navbar-end">
-                @guest
+                <!--@guest
                     <div class="navbar-item">
                         <div class="buttons">
-                            <a class="button is-primary" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="button is-primary border-success bg-success text-white" href="{{ route('login') }}">{{ __('Login') }}</a>
                             @if (Route::has('register'))
-                                <a class="button is-light" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <a class="button is-light border-white bg-light" href="{{ route('register') }}">{{ __('Register') }}</a>
                             @endif
                         </div>
                     </div>
-                @else
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link">
-                            {{ Auth::user()->name }}
-                        </a>
+                @else-->
+                    <div class="navbar-item has-dropdown is-hoverable bg-dark ">
+                        <a class="navbar-link text-white bg-dark"> <i class="far fa-user me-1"></i> {{ Auth::user()->name }}</a>
 
-                        <div class="navbar-dropdown is-right">
-                            <a class="navbar-item" href="{{ route('logout') }}"
+                        <div class="navbar-dropdown is-right bg-dark">
+                            <a class="navbar-item text-white" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                                <i class="fas fa-sign-out-alt me-1"></i>{{ __('Logout') }}
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                   style="display: none;">
@@ -131,18 +111,18 @@
                             </form>
                         </div>
                     </div>
-                @endguest
+                <!--@endguest-->
             </div>
         </div>
     </nav>
 
-    <div class="main is-fullheight">
+    <div class="main is-fullheight customMainBackgroundColor">
         @yield('content')
     </div>
 
-    <footer class="footer">
+    <footer class="footer bg-dark text-white .fs-5 text">
         <div class="content has-text-centered">
-            <small>Here comes some footer</small>
+            <p> &copy; 2021 BIC-4 - Project Exotic Animals Group Members: Aleksandar Sasa-Calic - Batuhan Sazak - Nenad Neskovic - Sergio Tallo Torres</p>
         </div>
     </footer>
 </div>
