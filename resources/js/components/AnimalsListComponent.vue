@@ -32,49 +32,31 @@
 </template>
 
 <script>
-    const asyncGetAnimals = async () => {
-        try {
-            return await axios.get('/list/animal');
-        } catch (err) {
-            throw err;
-        }
-    }
-
-    const getAnimals = () => {
-        return new Promise((resolve, reject) => {
-            axios.get('/list/animal')
-            .then((res) => {
-                console.log('ANIMALS ARE: ', res);
-                resolve(res.data);
-            })
-            .catch((err) => {
-                console.error('Something went wrong while fetching animals: ', err);
-                reject(err);
-            });
-        });
-    }
-
-    export default {
-        name: "AnimalsListComponent",
+   export default {
+        name: "AnimalsFormComponent",
         data() {
             return {
-                animals: [],
-                test: "TEST"
+                animals: getAnimals()
+            }
+        },
+        props: {
+            anmals: {
+                required: true
             }
         },
         components: {
             TableElement
         },
-        created() {
-                console.log("CALLING CREATED");
-                getAnimals()
-                    .then((animals) => {
-                        this.animals = animals;
-                    })
-                    .catch((err) => {
-                        console.error(err);
+        methods: {
+            openDeleteModal(animals) {
+                this.$emit('open-modal',
+                    {
+                        id: animals.id,
+                        title: animals.name,
+                        content: 'Do you really want to delete this animal?',
+                        url: '/animal/' + animals.slug
                     });
-                console.log("THIS.ANIMALS: ", this.animals);
+            }
         }
     }
 </script>

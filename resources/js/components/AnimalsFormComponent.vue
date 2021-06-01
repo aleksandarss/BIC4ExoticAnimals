@@ -44,3 +44,80 @@
         </div>
     </div>
 </template>
+
+<script>
+        let form = new Form({
+        'animals_id': '',
+        'name': '',
+        'description': ''
+    });
+
+    export default {
+        name: "AnimalsFormComponent",
+        components: {
+            QueryMessage
+        },
+        props: {
+            isEditable: {
+                required: false,
+                type: Boolean,
+                default: false
+            },
+            currentSpecies: {
+                required: false,
+                type: Object
+            }
+        },
+        data() {
+            return {
+                edit: undefined,
+                form: form,
+                url: ''
+            }
+        },
+        methods: {
+            submit() {
+                if (this.edit)
+                    this.form
+                        .put(this.url);
+                else
+                    this.form
+                        .post(this.url)
+                        .then(response => {
+                            this.url = '/animal/' + response.slug;
+
+                            this.form.animals_id = response.animals_id;
+                            this.form.name = response.name;
+                            this.form.description = response.description;
+
+                            this.form.noReset = ['animals_id', 'name', 'description'];
+
+                            this.edit = true;
+
+                            console.log("MESSAGE: ", this.form);
+                            window.history.pushState("", "", this.url);
+                        });
+                
+            }
+        },
+        created() {
+            this.edit = this.isEditable;
+
+            if (this.edit) {
+                this.url = '/animal/' + this.currentAnimals.slug;
+
+                this.form.animals_id = this.currentAnimals.animals_id;
+                this.form.name = this.currentAnimals.name;
+                this.form.description = this.currentAnimals.description;
+
+                this.form.noReset = ['animals_id', 'name', 'description'];
+            } else {
+                this.url = '/animal';
+            }
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>
