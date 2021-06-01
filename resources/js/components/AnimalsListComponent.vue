@@ -1,10 +1,9 @@
 <template>
     <div class="container">
         <div class="columns is-multiline">
-            <div class="column is-three-fifths is-offset-one-fifth">
+            <div class="column">
                 <div class="box custom-box">
                     <div class="table-container is-fullwidth">
-                    
                         <table class="table is-fullwidth is-hoverable">
                             <thead>
                                 <tr class="title is-5">

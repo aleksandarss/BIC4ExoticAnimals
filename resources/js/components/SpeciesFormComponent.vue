@@ -1,5 +1,8 @@
 <template>
     <div class="container">
+        <h1 class="title pb-3 fs-1 customHeaderColorSpeciesList text-center"> Create Species </h1>
+        <p class="customHeaderColorSpeciesList pb-5 fs-4 text-center">Here you can register a new species to the system. 
+            Just type the species name and add a description!</p>
         <div class="columns is-multiline">
             <div class="card blog-card column is-half is-offset-one-quarter bg-dark">
                 <header class="card-header">
@@ -12,7 +15,7 @@
                         </query-message>
                         <form @submit.prevent="submit">
                             <div class="field" v-if="!edit">
-                                <label class="label" for="name">Name</label>
+                                <label class="label text-white" for="name">Name</label>
                                 <div class="control">
                                     <input id="name"
                                            v-model="form.name"
