@@ -36,11 +36,11 @@
         name: "AnimalsFormComponent",
         data() {
             return {
-                animals: getAnimals()
+                animal: getAnimal()
             }
         },
         props: {
-            anmals: {
+            animal: {
                 required: true
             }
         },
@@ -48,13 +48,13 @@
             TableElement
         },
         methods: {
-            openDeleteModal(animals) {
+            openDeleteModal(animal) {
                 this.$emit('open-modal',
                     {
-                        id: animals.id,
-                        title: animals.name,
+                        id: animal.id,
+                        title: animal.name,
                         content: 'Do you really want to delete this animal?',
-                        url: '/animal/' + animals.slug
+                        url: '/animal/' + animal.slug
                     });
             }
         }

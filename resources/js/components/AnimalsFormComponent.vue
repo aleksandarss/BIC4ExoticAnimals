@@ -46,14 +46,31 @@
 </template>
 
 <script>
-        let form = new Form({
-        'animals_id': '',
+    let form = new Form({
+        'animal_id': '',
+        'species_id': '',
         'name': '',
         'description': ''
     });
 
+
+    const getSpecies = () => {
+        return new Promise((resolve, reject) => {
+            axios.get('/list/species')
+            .then((response) => {
+                console.log("LOADED SPECIES: ", response);
+
+                resolve(response.data);
+            })
+            .catch((err) => {
+                console.error("Something went wrong while fetching species: ", err);
+                reject(err);
+            });
+        });
+    }
+
     export default {
-        name: "AnimalsFormComponent",
+        name: "SpeciesFormComponent",
         components: {
             QueryMessage
         },
@@ -63,7 +80,7 @@
                 type: Boolean,
                 default: false
             },
-            currentSpecies: {
+            currentAnimal: {
                 required: false,
                 type: Object
             }
@@ -72,7 +89,8 @@
             return {
                 edit: undefined,
                 form: form,
-                url: ''
+                url: '',
+                species: []
             }
         },
         methods: {
@@ -86,11 +104,12 @@
                         .then(response => {
                             this.url = '/animal/' + response.slug;
 
-                            this.form.animals_id = response.animals_id;
+                            this.form.species_id = response.species_id;
+                            this.form.animal_id = response.animal_id;
                             this.form.name = response.name;
                             this.form.description = response.description;
 
-                            this.form.noReset = ['animals_id', 'name', 'description'];
+                            this.form.noReset = ['animal_id', 'species_id', 'name', 'description'];
 
                             this.edit = true;
 
@@ -101,16 +120,23 @@
             }
         },
         created() {
+
+            getSpecies()
+                .then(species => {
+                    this.species = species;
+                })
+                .catch(err => console.error(err));
+
             this.edit = this.isEditable;
 
             if (this.edit) {
-                this.url = '/animal/' + this.currentAnimals.slug;
+                this.url = '/animal/' + this.currentAnimal.slug;
 
-                this.form.animals_id = this.currentAnimals.animals_id;
-                this.form.name = this.currentAnimals.name;
-                this.form.description = this.currentAnimals.description;
+                this.form.animal_id = this.currentAnimal.animal_id;
+                this.form.name = this.currentAnimal.name;
+                this.form.description = this.currentAnimal.description;
 
-                this.form.noReset = ['animals_id', 'name', 'description'];
+                this.form.noReset = ['animal_id', 'name', 'description'];
             } else {
                 this.url = '/animal';
             }

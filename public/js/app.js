@@ -1956,12 +1956,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 var form = new Form({
-  'animals_id': '',
+  'animal_id': '',
+  'species_id': '',
   'name': '',
   'description': ''
 });
+
+var getSpecies = function getSpecies() {
+  return new Promise(function (resolve, reject) {
+    axios.get('/list/species').then(function (response) {
+      console.log("LOADED SPECIES: ", response);
+      resolve(response.data);
+    })["catch"](function (err) {
+      console.error("Something went wrong while fetching species: ", err);
+      reject(err);
+    });
+  });
+};
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "AnimalsFormComponent",
+  name: "SpeciesFormComponent",
   components: {
     QueryMessage: QueryMessage
   },
@@ -1971,7 +1985,7 @@ var form = new Form({
       type: Boolean,
       "default": false
     },
-    currentSpecies: {
+    currentAnimal: {
       required: false,
       type: Object
     }
@@ -1980,7 +1994,8 @@ var form = new Form({
     return {
       edit: undefined,
       form: form,
-      url: ''
+      url: '',
+      species: []
     };
   },
   methods: {
@@ -1989,10 +2004,11 @@ var form = new Form({
 
       if (this.edit) this.form.put(this.url);else this.form.post(this.url).then(function (response) {
         _this.url = '/animal/' + response.slug;
-        _this.form.animals_id = response.animals_id;
+        _this.form.species_id = response.species_id;
+        _this.form.animal_id = response.animal_id;
         _this.form.name = response.name;
         _this.form.description = response.description;
-        _this.form.noReset = ['animals_id', 'name', 'description'];
+        _this.form.noReset = ['animal_id', 'species_id', 'name', 'description'];
         _this.edit = true;
         console.log("MESSAGE: ", _this.form);
         window.history.pushState("", "", _this.url);
@@ -2000,14 +2016,21 @@ var form = new Form({
     }
   },
   created: function created() {
+    var _this2 = this;
+
+    getSpecies().then(function (species) {
+      _this2.species = species;
+    })["catch"](function (err) {
+      return console.error(err);
+    });
     this.edit = this.isEditable;
 
     if (this.edit) {
-      this.url = '/animal/' + this.currentAnimals.slug;
-      this.form.animals_id = this.currentAnimals.animals_id;
-      this.form.name = this.currentAnimals.name;
-      this.form.description = this.currentAnimals.description;
-      this.form.noReset = ['animals_id', 'name', 'description'];
+      this.url = '/animal/' + this.currentAnimal.slug;
+      this.form.animal_id = this.currentAnimal.animal_id;
+      this.form.name = this.currentAnimal.name;
+      this.form.description = this.currentAnimal.description;
+      this.form.noReset = ['animal_id', 'name', 'description'];
     } else {
       this.url = '/animal';
     }
@@ -2062,11 +2085,11 @@ __webpack_require__.r(__webpack_exports__);
   name: "AnimalsFormComponent",
   data: function data() {
     return {
-      animals: getAnimals()
+      animal: getAnimal()
     };
   },
   props: {
-    anmals: {
+    animal: {
       required: true
     }
   },
@@ -2074,12 +2097,12 @@ __webpack_require__.r(__webpack_exports__);
     TableElement: TableElement
   },
   methods: {
-    openDeleteModal: function openDeleteModal(animals) {
+    openDeleteModal: function openDeleteModal(animal) {
       this.$emit('open-modal', {
-        id: animals.id,
-        title: animals.name,
+        id: animal.id,
+        title: animal.name,
         content: 'Do you really want to delete this animal?',
-        url: '/animal/' + animals.slug
+        url: '/animal/' + animal.slug
       });
     }
   }
@@ -2180,7 +2203,6 @@ var getSpecies = function getSpecies() {
     })["catch"](function (err) {
       return console.error(err);
     });
-    console.log("SPECIES ARE: ", this.species);
   },
   computed: {
     hasSpecies: function hasSpecies() {
