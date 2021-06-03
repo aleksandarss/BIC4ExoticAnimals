@@ -79,7 +79,6 @@
                     this.species = species;
                 })
                 .catch(err => console.error(err));
-            console.log("SPECIES ARE: ", this.species);
         },
         computed: {
             hasSpecies() {

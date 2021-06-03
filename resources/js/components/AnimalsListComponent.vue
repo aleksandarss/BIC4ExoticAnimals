@@ -1,10 +1,9 @@
 <template>
     <div class="container">
         <div class="columns is-multiline">
-            <div class="column is-three-fifths is-offset-one-fifth">
+            <div class="column">
                 <div class="box custom-box">
                     <div class="table-container is-fullwidth">
-                    
                         <table class="table is-fullwidth is-hoverable">
                             <thead>
                                 <tr class="title is-5">
@@ -33,49 +32,31 @@
 </template>
 
 <script>
-    const asyncGetAnimals = async () => {
-        try {
-            return await axios.get('/list/animal');
-        } catch (err) {
-            throw err;
-        }
-    }
-
-    const getAnimals = () => {
-        return new Promise((resolve, reject) => {
-            axios.get('/list/animal')
-            .then((res) => {
-                console.log('ANIMALS ARE: ', res);
-                resolve(res.data);
-            })
-            .catch((err) => {
-                console.error('Something went wrong while fetching animals: ', err);
-                reject(err);
-            });
-        });
-    }
-
-    export default {
-        name: "AnimalsListComponent",
+   export default {
+        name: "AnimalsFormComponent",
         data() {
             return {
-                animals: [],
-                test: "TEST"
+                animal: getAnimal()
+            }
+        },
+        props: {
+            animal: {
+                required: true
             }
         },
         components: {
             TableElement
         },
-        created() {
-                console.log("CALLING CREATED");
-                getAnimals()
-                    .then((animals) => {
-                        this.animals = animals;
-                    })
-                    .catch((err) => {
-                        console.error(err);
+        methods: {
+            openDeleteModal(animal) {
+                this.$emit('open-modal',
+                    {
+                        id: animal.id,
+                        title: animal.name,
+                        content: 'Do you really want to delete this animal?',
+                        url: '/animal/' + animal.slug
                     });
-                console.log("THIS.ANIMALS: ", this.animals);
+            }
         }
     }
 </script>

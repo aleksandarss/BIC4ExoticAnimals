@@ -1899,33 +1899,15 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalFormComponent.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AnimalFormComponent.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalsFormComponent.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AnimalsFormComponent.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -1975,13 +1957,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 var form = new Form({
   'animal_id': '',
-  'name': '',
-  'description': '',
   'species_id': '',
-  'noReset': ['species_id']
+  'name': '',
+  'description': ''
 });
+
+var getSpecies = function getSpecies() {
+  return new Promise(function (resolve, reject) {
+    axios.get('/list/species').then(function (response) {
+      console.log("LOADED SPECIES: ", response);
+      resolve(response.data);
+    })["catch"](function (err) {
+      console.error("Something went wrong while fetching species: ", err);
+      reject(err);
+    });
+  });
+};
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "AnimalFormComponent",
+  name: "SpeciesFormComponent",
   components: {
     QueryMessage: QueryMessage
   },
@@ -2001,8 +1995,7 @@ var form = new Form({
       edit: undefined,
       form: form,
       url: '',
-      categories: [],
-      noCategories: false
+      species: []
     };
   },
   methods: {
@@ -2011,12 +2004,13 @@ var form = new Form({
 
       if (this.edit) this.form.put(this.url);else this.form.post(this.url).then(function (response) {
         _this.url = '/animal/' + response.slug;
+        _this.form.species_id = response.species_id;
         _this.form.animal_id = response.animal_id;
         _this.form.name = response.name;
         _this.form.description = response.description;
-        _this.form.species_id = response.species_id;
-        _this.form.noReset = ['animal_id', 'name', 'description', 'species_id'];
+        _this.form.noReset = ['animal_id', 'species_id', 'name', 'description'];
         _this.edit = true;
+        console.log("MESSAGE: ", _this.form);
         window.history.pushState("", "", _this.url);
       });
     }
@@ -2024,43 +2018,31 @@ var form = new Form({
   created: function created() {
     var _this2 = this;
 
-    axios.get('/list/species').then(function (response) {
-      _this2.species = response.data;
-      if (_this2.loading) _this2.noCategories = true;
+    getSpecies().then(function (species) {
+      _this2.species = species;
+    })["catch"](function (err) {
+      return console.error(err);
     });
     this.edit = this.isEditable;
 
     if (this.edit) {
       this.url = '/animal/' + this.currentAnimal.slug;
-      this.form.animal_id = this.currentAnimal.id;
+      this.form.animal_id = this.currentAnimal.animal_id;
       this.form.name = this.currentAnimal.name;
       this.form.description = this.currentAnimal.description;
-      this.form.species_id = this.currentAnimal.species_id;
-      this.form.noReset = ['animal_id', 'name', 'description', 'species_id'];
+      this.form.noReset = ['animal_id', 'name', 'description'];
     } else {
       this.url = '/animal';
-    }
-  },
-  computed: {
-    loading: function loading() {
-      return !this.species.length;
-    }
-  },
-  watch: {
-    species: function species() {
-      if (!this.loading && this.form.species_id === '') {
-        this.form.species_id = _.first(this.species).id;
-      }
     }
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalsListComponent.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AnimalsListComponent.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2085,10 +2067,44 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['title'],
-  mounted: function mounted() {
-    console.log('I am using the correct component.');
+  name: "AnimalsFormComponent",
+  data: function data() {
+    return {
+      animal: getAnimal()
+    };
+  },
+  props: {
+    animal: {
+      required: true
+    }
+  },
+  components: {
+    TableElement: TableElement
+  },
+  methods: {
+    openDeleteModal: function openDeleteModal(animal) {
+      this.$emit('open-modal', {
+        id: animal.id,
+        title: animal.name,
+        content: 'Do you really want to delete this animal?',
+        url: '/animal/' + animal.slug
+      });
+    }
   }
 });
 
@@ -2187,7 +2203,6 @@ var getSpecies = function getSpecies() {
     })["catch"](function (err) {
       return console.error(err);
     });
-    console.log("SPECIES ARE: ", this.species);
   },
   computed: {
     hasSpecies: function hasSpecies() {
@@ -2210,6 +2225,9 @@ var getSpecies = function getSpecies() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -2325,33 +2343,6 @@ var form = new Form({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -20324,10 +20315,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalFormComponent.vue?vue&type=template&id=f0d6c13c&scoped=true&":
-/*!**********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AnimalFormComponent.vue?vue&type=template&id=f0d6c13c&scoped=true& ***!
-  \**********************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalsFormComponent.vue?vue&type=template&id=5119b866&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AnimalsFormComponent.vue?vue&type=template&id=5119b866&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -20340,18 +20331,33 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
+    _c(
+      "h1",
+      {
+        staticClass: "title pb-3 fs-1 customHeaderColorSpeciesList text-center"
+      },
+      [_vm._v(" Create an animal ")]
+    ),
+    _vm._v(" "),
+    _c(
+      "p",
+      { staticClass: "customHeaderColorSpeciesList pb-5 fs-4 text-center" },
+      [_vm._v("Here you can register a new animal to the system.")]
+    ),
+    _vm._v(" "),
     _c("div", { staticClass: "columns is-multiline" }, [
       _c(
         "div",
         {
-          staticClass: "card animal-card column is-half is-offset-one-quarter"
+          staticClass:
+            "card blog-card column is-half is-offset-one-quarter bg-dark"
         },
         [
           _c("header", { staticClass: "card-header" }, [
             _c("h1", {
               staticClass: "card-header-title is-centered",
               domProps: {
-                textContent: _vm._s(_vm.edit ? _vm.form.title : "New animal")
+                textContent: _vm._s(_vm.edit ? _vm.form.name : "New animal")
               }
             })
           ]),
@@ -20384,7 +20390,10 @@ var render = function() {
                       ? _c("div", { staticClass: "field" }, [
                           _c(
                             "label",
-                            { staticClass: "label", attrs: { for: "name" } },
+                            {
+                              staticClass: "label text-white",
+                              attrs: { for: "name" }
+                            },
                             [_vm._v("Name")]
                           ),
                           _vm._v(" "),
@@ -20439,107 +20448,11 @@ var render = function() {
                     _c("div", { staticClass: "field" }, [
                       _c(
                         "label",
-                        { staticClass: "label", attrs: { for: "species" } },
-                        [_vm._v("Species")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "control" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "select is-fullwidth",
-                            class: _vm.loading ? "is-loading" : ""
-                          },
-                          [
-                            _c(
-                              "select",
-                              {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.form.category_id,
-                                    expression: "form.category_id"
-                                  }
-                                ],
-                                attrs: {
-                                  id: "category",
-                                  disabled: _vm.loading
-                                },
-                                on: {
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.$set(
-                                      _vm.form,
-                                      "category_id",
-                                      $event.target.multiple
-                                        ? $$selectedVal
-                                        : $$selectedVal[0]
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _vm.loading
-                                  ? _c(
-                                      "option",
-                                      {
-                                        domProps: {
-                                          value: this.form.category_id
-                                        }
-                                      },
-                                      [_vm._v(" Loading...")]
-                                    )
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                _vm._l(_vm.categories, function(cat) {
-                                  return !_vm.loading
-                                    ? _c("option", {
-                                        domProps: {
-                                          value: cat.id,
-                                          textContent: _vm._s(cat.name)
-                                        }
-                                      })
-                                    : _vm._e()
-                                })
-                              ],
-                              2
-                            )
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _vm.form.errors.has("category_id")
-                        ? _c("p", {
-                            staticClass: "help is-danger",
-                            domProps: {
-                              textContent: _vm._s(
-                                _vm.form.errors.get("category_id")
-                              )
-                            }
-                          })
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.noCategories
-                        ? _c("p", { staticClass: "help is-warning" }, [
-                            _vm._v("Add some categories to create animals!")
-                          ])
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "field" }, [
-                      _c(
-                        "label",
-                        { staticClass: "label", attrs: { for: "body" } },
-                        [_vm._v("Body")]
+                        {
+                          staticClass: "label text-white",
+                          attrs: { for: "description" }
+                        },
+                        [_vm._v("Description")]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "control" }, [
@@ -20548,42 +20461,46 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.form.body,
-                              expression: "form.body"
+                              value: _vm.form.description,
+                              expression: "form.description"
                             }
                           ],
                           staticClass: "textarea",
-                          attrs: { id: "body" },
-                          domProps: { value: _vm.form.body },
+                          attrs: { id: "description" },
+                          domProps: { value: _vm.form.description },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.$set(_vm.form, "body", $event.target.value)
+                              _vm.$set(
+                                _vm.form,
+                                "description",
+                                $event.target.value
+                              )
                             }
                           }
                         })
                       ]),
                       _vm._v(" "),
-                      _vm.form.errors.has("body")
+                      _vm.form.errors.has("description")
                         ? _c("p", {
                             staticClass: "help is-danger",
                             domProps: {
-                              textContent: _vm._s(_vm.form.errors.get("body"))
+                              textContent: _vm._s(
+                                _vm.form.errors.get("description")
+                              )
                             }
                           })
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm._m(0)
+                        : _vm._e()
                     ]),
                     _vm._v(" "),
                     _c("button", {
                       staticClass:
                         "button is-large is-primary is-outlined is-fullwidth",
-                      attrs: { type: "submit", disabled: _vm.loading },
+                      attrs: { type: "submit" },
                       domProps: {
-                        textContent: _vm._s(_vm.edit ? "Save" : "Post")
+                        textContent: _vm._s(_vm.edit ? "Update" : "Save")
                       }
                     })
                   ]
@@ -20597,37 +20514,17 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "help" }, [
-      _vm._v("\n                                You can use "),
-      _c(
-        "a",
-        {
-          attrs: {
-            target: "_blank",
-            href: "https://daringfireball.net/projects/markdown/syntax"
-          }
-        },
-        [_vm._v("\n                                Markdown")]
-      ),
-      _vm._v(" syntax here.\n                            ")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&":
-/*!*******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e& ***!
-  \*******************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalsListComponent.vue?vue&type=template&id=0e21db9a&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AnimalsListComponent.vue?vue&type=template&id=0e21db9a&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -20641,25 +20538,225 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "columns is-multiline" }, [
-      _c("div", { staticClass: "card column is-half is-offset-one-quarter" }, [
-        _c("header", { staticClass: "card-header" }, [
-          _c("h1", { staticClass: "card-header-title" }, [
-            _vm._v(
-              "\n                    " +
-                _vm._s(_vm.title) +
-                "\n                "
-            )
+      _c("div", { staticClass: "column" }, [
+        _c("div", { staticClass: "box custom-box" }, [
+          _c("div", { staticClass: "table-container is-fullwidth" }, [
+            _c("table", { staticClass: "table is-fullwidth is-hoverable" }, [
+              _c("thead", [
+                _c(
+                  "tr",
+                  { staticClass: "title is-5" },
+                  [
+                    _c("table-element", { attrs: { "element-type": "th" } }, [
+                      _vm._v("Name")
+                    ]),
+                    _vm._v(" "),
+                    _c("table-element", { attrs: { "element-type": "th" } }, [
+                      _vm._v("Description")
+                    ]),
+                    _vm._v(" "),
+                    _c("table-element", { attrs: { "element-type": "th" } }, [
+                      _vm._v("Species")
+                    ]),
+                    _vm._v(" "),
+                    _c("table-element", { attrs: { "element-type": "th" } }, [
+                      _vm._v("Created")
+                    ]),
+                    _vm._v(" "),
+                    _c("table-element", { attrs: { "element-type": "th" } }, [
+                      _vm._v("Modified")
+                    ])
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.animals, function(animal) {
+                  return _c(
+                    "tr",
+                    { key: animal.id },
+                    [
+                      _c("table-element", { attrs: { "element-type": "td" } }, [
+                        _vm._v(_vm._s(animal.name))
+                      ]),
+                      _vm._v(" "),
+                      _c("table-element", { attrs: { "element-type": "td" } }, [
+                        _vm._v(_vm._s(animal.description))
+                      ]),
+                      _vm._v(" "),
+                      _c("table-element", { attrs: { "element-type": "td" } }, [
+                        _vm._v(_vm._s(animal.species.name))
+                      ]),
+                      _vm._v(" "),
+                      _c("table-element", { attrs: { "element-type": "td" } }, [
+                        _vm._v(_vm._s(animal.created_at))
+                      ]),
+                      _vm._v(" "),
+                      _c("table-element", { attrs: { "element-type": "td" } }, [
+                        _vm._v(_vm._s(animal.updated_at))
+                      ])
+                    ],
+                    1
+                  )
+                }),
+                0
+              )
+            ])
           ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-content" }, [
-          _c("div", { staticClass: "content" }, [_vm._t("default")], 2)
         ])
       ])
     ])
   ])
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalsSearchComponent.vue?vue&type=template&id=59dd8669&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AnimalsSearchComponent.vue?vue&type=template&id=59dd8669& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "h1",
+      {
+        staticClass: "title pb-3 fs-1 customHeaderColorSpeciesList text-center"
+      },
+      [_vm._v(" Search for a specific animal ")]
+    ),
+    _vm._v(" "),
+    _vm._m(0),
+    _vm._v(" "),
+    _c("table", { staticClass: "table is-fullwidth is-hoverable" }, [
+      _c("thead", [
+        _c(
+          "tr",
+          { staticClass: "title is-6 text-center" },
+          [
+            _c("table-element", { attrs: { "element-type": "th" } }, [
+              _vm._v("Name")
+            ]),
+            _vm._v(" "),
+            _c("table-element", { attrs: { "element-type": "th" } }, [
+              _vm._v("Description")
+            ]),
+            _vm._v(" "),
+            _c("table-element", { attrs: { "element-type": "th" } }, [
+              _vm._v("Animals")
+            ]),
+            _vm._v(" "),
+            _c("table-element", { attrs: { "element-type": "th" } }, [
+              _vm._v("Created")
+            ]),
+            _vm._v(" "),
+            _c("table-element", { attrs: { "element-type": "th" } }, [
+              _vm._v("Modified")
+            ]),
+            _vm._v(" "),
+            _c("table-element", { attrs: { "element-type": "th" } })
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c("tbody", [
+        _c(
+          "tr",
+          { staticClass: "title is-6 text-center" },
+          [
+            _c("table-element", { attrs: { "element-type": "td" } }, [
+              _vm._v("Hallo")
+            ]),
+            _vm._v(" "),
+            _c("table-element", { attrs: { "element-type": "td" } }, [
+              _vm._v("Batuhan")
+            ]),
+            _vm._v(" "),
+            _c("table-element", { attrs: { "element-type": "td" } }, [
+              _vm._v("das")
+            ]),
+            _vm._v(" "),
+            _c("table-element", { attrs: { "element-type": "td" } }, [
+              _vm._v("ist")
+            ]),
+            _vm._v(" "),
+            _c("table-element", { attrs: { "element-type": "td" } }, [
+              _vm._v("test")
+            ]),
+            _vm._v(" "),
+            _c("table-element", { attrs: { "element-type": "td" } }, [
+              _vm._v("asdasd")
+            ])
+          ],
+          1
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "nav",
+      {
+        staticClass:
+          "navbar navbar-expand-lg bg-light mb-3 justify-content-center"
+      },
+      [
+        _c("div", { staticClass: "d-flex" }, [
+          _c(
+            "p",
+            {
+              staticClass: "p-2 flex-fill bd-highlight align-self-center fs-4"
+            },
+            [_vm._v("Search for animal by name:")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "p-2 flex-fill bd-highlight" }, [
+            _c("form", { staticClass: "d-flex" }, [
+              _c("input", {
+                staticClass: "form-control me-3",
+                attrs: {
+                  type: "search",
+                  placeholder: "Search",
+                  "aria-label": "Search"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-success",
+                  attrs: { type: "submit" }
+                },
+                [_vm._v("Search")]
+              )
+            ])
+          ])
+        ])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -20781,10 +20878,31 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
+    _c(
+      "h1",
+      {
+        staticClass: "title pb-3 fs-1 customHeaderColorSpeciesList text-center"
+      },
+      [_vm._v(" Create Species ")]
+    ),
+    _vm._v(" "),
+    _c(
+      "p",
+      { staticClass: "customHeaderColorSpeciesList pb-5 fs-4 text-center" },
+      [
+        _vm._v(
+          "Here you can register a new species to the system. \n        Just type the species name and add a description!"
+        )
+      ]
+    ),
+    _vm._v(" "),
     _c("div", { staticClass: "columns is-multiline" }, [
       _c(
         "div",
-        { staticClass: "card blog-card column is-half is-offset-one-quarter" },
+        {
+          staticClass:
+            "card blog-card column is-half is-offset-one-quarter bg-dark"
+        },
         [
           _c("header", { staticClass: "card-header" }, [
             _c("h1", {
@@ -20823,7 +20941,10 @@ var render = function() {
                       ? _c("div", { staticClass: "field" }, [
                           _c(
                             "label",
-                            { staticClass: "label", attrs: { for: "name" } },
+                            {
+                              staticClass: "label text-white",
+                              attrs: { for: "name" }
+                            },
                             [_vm._v("Name")]
                           ),
                           _vm._v(" "),
@@ -20878,7 +20999,10 @@ var render = function() {
                     _c("div", { staticClass: "field" }, [
                       _c(
                         "label",
-                        { staticClass: "label", attrs: { for: "description" } },
+                        {
+                          staticClass: "label text-white",
+                          attrs: { for: "description" }
+                        },
                         [_vm._v("Description")]
                       ),
                       _vm._v(" "),
@@ -20970,58 +21094,27 @@ var render = function() {
           "tr",
           { staticClass: "title is-6" },
           [
-            _c(
-              "table-element",
-              {
-                staticClass: "text-black fs-5",
-                attrs: { "element-type": "th" }
-              },
-              [_vm._v("Name")]
-            ),
+            _c("table-element", { attrs: { "element-type": "th" } }, [
+              _vm._v("Name")
+            ]),
             _vm._v(" "),
-            _c(
-              "table-element",
-              {
-                staticClass: "text-black fs-5",
-                attrs: { "element-type": "th" }
-              },
-              [_vm._v("Description")]
-            ),
+            _c("table-element", { attrs: { "element-type": "th" } }, [
+              _vm._v("Description")
+            ]),
             _vm._v(" "),
-            _c(
-              "table-element",
-              {
-                staticClass: "text-black fs-5",
-                attrs: {
-                  "element-type": "th",
-                  "text-class": "has-text-centered"
-                }
-              },
-              [_vm._v("Animals")]
-            ),
+            _c("table-element", { attrs: { "element-type": "th" } }, [
+              _vm._v("Animals")
+            ]),
             _vm._v(" "),
-            _c(
-              "table-element",
-              {
-                staticClass: "text-black fs-5",
-                attrs: { "element-type": "th" }
-              },
-              [_vm._v("Created")]
-            ),
+            _c("table-element", { attrs: { "element-type": "th" } }, [
+              _vm._v("Created")
+            ]),
             _vm._v(" "),
-            _c(
-              "table-element",
-              {
-                staticClass: "text-black fs-5",
-                attrs: { "element-type": "th" }
-              },
-              [_vm._v("Modified")]
-            ),
+            _c("table-element", { attrs: { "element-type": "th" } }, [
+              _vm._v("Modified")
+            ]),
             _vm._v(" "),
-            _c("table-element", {
-              staticClass: "text-black fs-5",
-              attrs: { "element-type": "th" }
-            })
+            _c("table-element", { attrs: { "element-type": "th" } })
           ],
           1
         )
@@ -21029,174 +21122,87 @@ var render = function() {
       _vm._v(" "),
       _c(
         "tbody",
-        [
-          _vm._v("\n<<<<<<< HEAD\n                "),
-          _vm._l(_vm.species, function(species) {
-            return _c(
-              "tr",
-              { key: species.id },
-              [
-                _c("table-element", { attrs: { "element-type": "td" } }, [
-                  _c("a", {
-                    attrs: {
-                      href: "/species/" + species.slug,
-                      title: species.name
-                    },
-                    domProps: { textContent: _vm._s(species.name) }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("table-element", { attrs: { "element-type": "td" } }, [
-                  _vm._v(_vm._s(species.description))
-                ]),
-                _vm._v(" "),
-                _c(
-                  "table-element",
-                  {
-                    attrs: {
-                      "element-type": "td",
-                      "text-class": "has-text-centered"
-                    }
+        _vm._l(_vm.species, function(specimen) {
+          return _c(
+            "tr",
+            { key: specimen.id },
+            [
+              _c("table-element", { attrs: { "element-type": "td" } }, [
+                _c("a", {
+                  attrs: {
+                    href: "/species/" + specimen.slug,
+                    title: specimen.name
                   },
-                  [_vm._v(_vm._s(species.animals.length))]
-                ),
-                _vm._v(" "),
-                _c("table-element", { attrs: { "element-type": "td" } }, [
-                  _vm._v(
-                    _vm._s(_vm._f("moment")(species.created_at, "DD.MM.YYYY"))
-                  )
-                ]),
-                _vm._v(" "),
-                _c("table-element", { attrs: { "element-type": "td" } }, [
-                  _vm._v(
-                    _vm._s(_vm._f("moment")(species.updated_at, "DD.MM.YYYY"))
-                  )
-                ]),
-                _vm._v(" "),
-                _c("table-element", { attrs: { "element-type": "td" } }, [
-                  _c("p", { staticClass: "buttons" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "button is-info is-outlined is-small",
-                        attrs: { href: "/species/" + species.slug + "/edit" }
-                      },
-                      [
-                        _c("span", { staticClass: "icon" }, [
-                          _c("i", { staticClass: "fa fa-edit" })
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    !species.animals.length
-                      ? _c(
-                          "button",
-                          {
-                            staticClass:
-                              "button is-danger is-outlined is-small",
-                            on: {
-                              click: function($event) {
-                                return _vm.openDeleteModal(species)
-                              }
-                            }
-                          },
-                          [
-                            _c("span", { staticClass: "icon" }, [
-                              _c("i", { staticClass: "fa fa-remove" })
-                            ])
-                          ]
-                        )
-                      : _vm._e()
-                  ])
-                ])
-              ],
-              1
-            )
-          }),
-          _vm._v("\n=======\n            "),
-          _vm._l(_vm.species, function(specimen) {
-            return _c(
-              "tr",
-              { key: specimen.id },
-              [
-                _c("table-element", { attrs: { "element-type": "td" } }, [
-                  _c("a", {
-                    attrs: {
-                      href: "/species/" + specimen.slug,
-                      title: specimen.name
+                  domProps: { textContent: _vm._s(specimen.name) }
+                })
+              ]),
+              _vm._v(" "),
+              _c("table-element", { attrs: { "element-type": "td" } }, [
+                _vm._v(_vm._s(specimen.description))
+              ]),
+              _vm._v(" "),
+              _c(
+                "table-element",
+                {
+                  attrs: {
+                    "element-type": "td",
+                    "text-class": "has-text-centered"
+                  }
+                },
+                [_vm._v(_vm._s(specimen.animals.length))]
+              ),
+              _vm._v(" "),
+              _c("table-element", { attrs: { "element-type": "td" } }, [
+                _vm._v(
+                  _vm._s(_vm._f("moment")(specimen.created_at, "DD.MM.YYYY"))
+                )
+              ]),
+              _vm._v(" "),
+              _c("table-element", { attrs: { "element-type": "td" } }, [
+                _vm._v(
+                  _vm._s(_vm._f("moment")(specimen.updated_at, "DD.MM.YYYY"))
+                )
+              ]),
+              _vm._v(" "),
+              _c("table-element", { attrs: { "element-type": "td" } }, [
+                _c("p", { staticClass: "buttons" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "button is-info is-outlined ",
+                      attrs: { href: "/species/" + specimen.slug + "/edit" }
                     },
-                    domProps: { textContent: _vm._s(specimen.name) }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("table-element", { attrs: { "element-type": "td" } }, [
-                  _vm._v(_vm._s(specimen.description))
-                ]),
-                _vm._v(" "),
-                _c(
-                  "table-element",
-                  {
-                    attrs: {
-                      "element-type": "td",
-                      "text-class": "has-text-centered"
-                    }
-                  },
-                  [_vm._v(_vm._s(specimen.animals.length))]
-                ),
-                _vm._v(" "),
-                _c("table-element", { attrs: { "element-type": "td" } }, [
-                  _vm._v(
-                    _vm._s(_vm._f("moment")(specimen.created_at, "DD.MM.YYYY"))
-                  )
-                ]),
-                _vm._v(" "),
-                _c("table-element", { attrs: { "element-type": "td" } }, [
-                  _vm._v(
-                    _vm._s(_vm._f("moment")(specimen.updated_at, "DD.MM.YYYY"))
-                  )
-                ]),
-                _vm._v(" "),
-                _c("table-element", { attrs: { "element-type": "td" } }, [
-                  _c("p", { staticClass: "buttons" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "button is-info is-outlined is-small",
-                        attrs: { href: "/species/" + specimen.slug + "/edit" }
-                      },
-                      [
-                        _c("span", { staticClass: "icon" }, [
-                          _c("i", { staticClass: "fa fa-edit" })
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "button is-danger is-outlined is-small",
-                        attrs: { disabled: specimen.animals.length > 0 },
-                        on: {
-                          click: function($event) {
-                            return _vm.openDeleteModal(specimen)
-                          }
+                    [
+                      _c("span", { staticClass: "icon" }, [
+                        _c("i", { staticClass: "fa fa-edit" })
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button is-danger is-outlined",
+                      attrs: { disabled: specimen.animals.length > 0 },
+                      on: {
+                        click: function($event) {
+                          return _vm.openDeleteModal(specimen)
                         }
-                      },
-                      [
-                        _c("span", { staticClass: "icon" }, [
-                          _c("i", { staticClass: "fa fa-remove" })
-                        ])
-                      ]
-                    )
-                  ])
+                      }
+                    },
+                    [
+                      _c("span", { staticClass: "icon" }, [
+                        _c("i", { staticClass: "fa fa-remove" })
+                      ])
+                    ]
+                  )
                 ])
-              ],
-              1
-            )
-          }),
-          _vm._v("\n>>>>>>> origin/master\n            ")
-        ],
-        2
+              ])
+            ],
+            1
+          )
+        }),
+        0
       )
     ])
   ])
@@ -33607,11 +33613,12 @@ window.Vue = vue__WEBPACK_IMPORTED_MODULE_0___default.a;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 Vue.component('query-message', __webpack_require__(/*! ./components/base/QueryMessage.vue */ "./resources/js/components/base/QueryMessage.vue")["default"]);
 Vue.component('species', __webpack_require__(/*! ./components/SpeciesComponent.vue */ "./resources/js/components/SpeciesComponent.vue")["default"]);
-Vue.component('animal-form', __webpack_require__(/*! ./components/AnimalFormComponent.vue */ "./resources/js/components/AnimalFormComponent.vue")["default"]);
 Vue.component('species-form', __webpack_require__(/*! ./components/SpeciesFormComponent.vue */ "./resources/js/components/SpeciesFormComponent.vue")["default"]);
+Vue.component('animals', __webpack_require__(/*! ./components/AnimalsListComponent.vue */ "./resources/js/components/AnimalsListComponent.vue")["default"]);
+Vue.component('animal-search', __webpack_require__(/*! ./components/AnimalsSearchComponent.vue */ "./resources/js/components/AnimalsSearchComponent.vue")["default"]);
+Vue.component('animal-form', __webpack_require__(/*! ./components/AnimalsFormComponent.vue */ "./resources/js/components/AnimalsFormComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -33694,17 +33701,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /***/ }),
 
-/***/ "./resources/js/components/AnimalFormComponent.vue":
-/*!*********************************************************!*\
-  !*** ./resources/js/components/AnimalFormComponent.vue ***!
-  \*********************************************************/
+/***/ "./resources/js/components/AnimalsFormComponent.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/AnimalsFormComponent.vue ***!
+  \**********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _AnimalFormComponent_vue_vue_type_template_id_f0d6c13c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AnimalFormComponent.vue?vue&type=template&id=f0d6c13c&scoped=true& */ "./resources/js/components/AnimalFormComponent.vue?vue&type=template&id=f0d6c13c&scoped=true&");
-/* harmony import */ var _AnimalFormComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AnimalFormComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/AnimalFormComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _AnimalsFormComponent_vue_vue_type_template_id_5119b866_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AnimalsFormComponent.vue?vue&type=template&id=5119b866&scoped=true& */ "./resources/js/components/AnimalsFormComponent.vue?vue&type=template&id=5119b866&scoped=true&");
+/* harmony import */ var _AnimalsFormComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AnimalsFormComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/AnimalsFormComponent.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -33714,66 +33721,66 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _AnimalFormComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _AnimalFormComponent_vue_vue_type_template_id_f0d6c13c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _AnimalFormComponent_vue_vue_type_template_id_f0d6c13c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _AnimalsFormComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AnimalsFormComponent_vue_vue_type_template_id_5119b866_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AnimalsFormComponent_vue_vue_type_template_id_5119b866_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "f0d6c13c",
+  "5119b866",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/AnimalFormComponent.vue"
+component.options.__file = "resources/js/components/AnimalsFormComponent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/AnimalFormComponent.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************!*\
-  !*** ./resources/js/components/AnimalFormComponent.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************/
+/***/ "./resources/js/components/AnimalsFormComponent.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/AnimalsFormComponent.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalFormComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./AnimalFormComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalFormComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalFormComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalsFormComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./AnimalsFormComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalsFormComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalsFormComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/AnimalFormComponent.vue?vue&type=template&id=f0d6c13c&scoped=true&":
-/*!****************************************************************************************************!*\
-  !*** ./resources/js/components/AnimalFormComponent.vue?vue&type=template&id=f0d6c13c&scoped=true& ***!
-  \****************************************************************************************************/
+/***/ "./resources/js/components/AnimalsFormComponent.vue?vue&type=template&id=5119b866&scoped=true&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/AnimalsFormComponent.vue?vue&type=template&id=5119b866&scoped=true& ***!
+  \*****************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalFormComponent_vue_vue_type_template_id_f0d6c13c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./AnimalFormComponent.vue?vue&type=template&id=f0d6c13c&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalFormComponent.vue?vue&type=template&id=f0d6c13c&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalFormComponent_vue_vue_type_template_id_f0d6c13c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalsFormComponent_vue_vue_type_template_id_5119b866_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./AnimalsFormComponent.vue?vue&type=template&id=5119b866&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalsFormComponent.vue?vue&type=template&id=5119b866&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalsFormComponent_vue_vue_type_template_id_5119b866_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalFormComponent_vue_vue_type_template_id_f0d6c13c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalsFormComponent_vue_vue_type_template_id_5119b866_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
 /***/ }),
 
-/***/ "./resources/js/components/ExampleComponent.vue":
-/*!******************************************************!*\
-  !*** ./resources/js/components/ExampleComponent.vue ***!
-  \******************************************************/
+/***/ "./resources/js/components/AnimalsListComponent.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/AnimalsListComponent.vue ***!
+  \**********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ExampleComponent.vue?vue&type=template&id=299e239e& */ "./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&");
-/* harmony import */ var _ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ExampleComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _AnimalsListComponent_vue_vue_type_template_id_0e21db9a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AnimalsListComponent.vue?vue&type=template&id=0e21db9a&scoped=true& */ "./resources/js/components/AnimalsListComponent.vue?vue&type=template&id=0e21db9a&scoped=true&");
+/* harmony import */ var _AnimalsListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AnimalsListComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/AnimalsListComponent.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -33783,9 +33790,76 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _AnimalsListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AnimalsListComponent_vue_vue_type_template_id_0e21db9a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AnimalsListComponent_vue_vue_type_template_id_0e21db9a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "0e21db9a",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/AnimalsListComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/AnimalsListComponent.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/AnimalsListComponent.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalsListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./AnimalsListComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalsListComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalsListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/AnimalsListComponent.vue?vue&type=template&id=0e21db9a&scoped=true&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/AnimalsListComponent.vue?vue&type=template&id=0e21db9a&scoped=true& ***!
+  \*****************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalsListComponent_vue_vue_type_template_id_0e21db9a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./AnimalsListComponent.vue?vue&type=template&id=0e21db9a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalsListComponent.vue?vue&type=template&id=0e21db9a&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalsListComponent_vue_vue_type_template_id_0e21db9a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalsListComponent_vue_vue_type_template_id_0e21db9a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/AnimalsSearchComponent.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/AnimalsSearchComponent.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AnimalsSearchComponent_vue_vue_type_template_id_59dd8669___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AnimalsSearchComponent.vue?vue&type=template&id=59dd8669& */ "./resources/js/components/AnimalsSearchComponent.vue?vue&type=template&id=59dd8669&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _AnimalsSearchComponent_vue_vue_type_template_id_59dd8669___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AnimalsSearchComponent_vue_vue_type_template_id_59dd8669___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -33795,38 +33869,24 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/ExampleComponent.vue"
+component.options.__file = "resources/js/components/AnimalsSearchComponent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************!*\
-  !*** ./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ExampleComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&":
-/*!*************************************************************************************!*\
-  !*** ./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e& ***!
-  \*************************************************************************************/
+/***/ "./resources/js/components/AnimalsSearchComponent.vue?vue&type=template&id=59dd8669&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/AnimalsSearchComponent.vue?vue&type=template&id=59dd8669& ***!
+  \*******************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ExampleComponent.vue?vue&type=template&id=299e239e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalsSearchComponent_vue_vue_type_template_id_59dd8669___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./AnimalsSearchComponent.vue?vue&type=template&id=59dd8669& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalsSearchComponent.vue?vue&type=template&id=59dd8669&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalsSearchComponent_vue_vue_type_template_id_59dd8669___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalsSearchComponent_vue_vue_type_template_id_59dd8669___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

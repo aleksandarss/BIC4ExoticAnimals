@@ -1,12 +1,11 @@
 <template>
     <div class="container">
-        <h1 class="title pb-3 fs-1 customHeaderColorSpeciesList text-center"> Create Species </h1>
-        <p class="customHeaderColorSpeciesList pb-5 fs-4 text-center">Here you can register a new species to the system. 
-            Just type the species name and add a description!</p>
+        <h1 class="title pb-3 fs-1 customHeaderColorSpeciesList text-center"> Create an animal </h1>
+        <p class="customHeaderColorSpeciesList pb-5 fs-4 text-center">Here you can register a new animal to the system.</p>
         <div class="columns is-multiline">
             <div class="card blog-card column is-half is-offset-one-quarter bg-dark">
                 <header class="card-header">
-                    <h1 class="card-header-title is-centered" v-text="edit ? form.name : 'New species'"/>
+                    <h1 class="card-header-title is-centered" v-text="edit ? form.name : 'New animal'"/>
                 </header>
                 <div class="card-content">
                     <div class="content">
@@ -48,10 +47,27 @@
 
 <script>
     let form = new Form({
+        'animal_id': '',
         'species_id': '',
         'name': '',
         'description': ''
     });
+
+
+    const getSpecies = () => {
+        return new Promise((resolve, reject) => {
+            axios.get('/list/species')
+            .then((response) => {
+                console.log("LOADED SPECIES: ", response);
+
+                resolve(response.data);
+            })
+            .catch((err) => {
+                console.error("Something went wrong while fetching species: ", err);
+                reject(err);
+            });
+        });
+    }
 
     export default {
         name: "SpeciesFormComponent",
@@ -64,7 +80,7 @@
                 type: Boolean,
                 default: false
             },
-            currentSpecies: {
+            currentAnimal: {
                 required: false,
                 type: Object
             }
@@ -73,7 +89,8 @@
             return {
                 edit: undefined,
                 form: form,
-                url: ''
+                url: '',
+                species: []
             }
         },
         methods: {
@@ -85,13 +102,14 @@
                     this.form
                         .post(this.url)
                         .then(response => {
-                            this.url = '/species/' + response.slug;
+                            this.url = '/animal/' + response.slug;
 
                             this.form.species_id = response.species_id;
+                            this.form.animal_id = response.animal_id;
                             this.form.name = response.name;
                             this.form.description = response.description;
 
-                            this.form.noReset = ['species_id', 'name', 'description'];
+                            this.form.noReset = ['animal_id', 'species_id', 'name', 'description'];
 
                             this.edit = true;
 
@@ -102,18 +120,25 @@
             }
         },
         created() {
+
+            getSpecies()
+                .then(species => {
+                    this.species = species;
+                })
+                .catch(err => console.error(err));
+
             this.edit = this.isEditable;
 
             if (this.edit) {
-                this.url = '/species/' + this.currentSpecies.slug;
+                this.url = '/animal/' + this.currentAnimal.slug;
 
-                this.form.species_id = this.currentSpecies.species_id;
-                this.form.name = this.currentSpecies.name;
-                this.form.description = this.currentSpecies.description;
+                this.form.animal_id = this.currentAnimal.animal_id;
+                this.form.name = this.currentAnimal.name;
+                this.form.description = this.currentAnimal.description;
 
-                this.form.noReset = ['species_id', 'name', 'description'];
+                this.form.noReset = ['animal_id', 'name', 'description'];
             } else {
-                this.url = '/species';
+                this.url = '/animal';
             }
         }
     }

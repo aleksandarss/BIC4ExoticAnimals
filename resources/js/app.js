@@ -22,9 +22,10 @@
  
  Vue.component('query-message', require('./components/base/QueryMessage.vue').default);
  Vue.component('species', require('./components/SpeciesComponent.vue').default);
- Vue.component('animal-form', require('./components/AnimalFormComponent.vue').default);
  Vue.component('species-form', require('./components/SpeciesFormComponent.vue').default);
  Vue.component('animals', require('./components/AnimalsListComponent.vue').default);
+ Vue.component('animal-search', require('./components/AnimalsSearchComponent.vue').default);
+ Vue.component('animal-form', require('./components/AnimalsFormComponent.vue').default);
  
  /**
   * Next, we will create a fresh Vue application instance and attach it to

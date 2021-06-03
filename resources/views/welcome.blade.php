@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="hero is-fullheight-with-navbar">
-        <div class="hero-body text-center bg-dark">
+        <div class="hero-body has-text-centered has-background-dark">
             <div class="container">
                 <h1 class="title pb-3 fs-1 customHeaderColorForWelcomePage">
                     Welcome To {{ env('APP_TITLE', 'Sample application') }}
@@ -18,4 +18,3 @@
         </div>
     </section>
 @endsection
-
