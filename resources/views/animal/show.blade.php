@@ -3,8 +3,6 @@
 
 @section('content')
     <section class="section">
-        <div class="container">
-            <h1>Show animal</h1>
-        </div>
+        <animals :animals="{{ $animals }}" :user="{{ Auth::user() }}"></animals>
     </section>
 @endsection
