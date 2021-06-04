@@ -44,6 +44,21 @@
                                 <p class="help is-danger" v-if="form.errors.has('description')"
                                    v-text="form.errors.get('description')"/>
                             </div>
+                            <div class="field">
+                                <label class="label" for="species">Species</label>
+                                <div class="control">
+                                    <div class="select is-fullwidth" :class="loading ? 'is-loading' : ''">
+                                        <select id="species" :disabled="loading" v-model="form.species_id">
+                                            <option v-if="loading" :value="this.form.species_id"> Loading...</option>
+                                            <option v-for="spec in species" v-if="!loading" v-text="spec.name"
+                                                    :value="spec.id"/>
+                                        </select>
+                                    </div>
+                                </div>
+                                <p class="help is-danger" v-if="form.errors.has('species_id')"
+                                   v-text="form.errors.get('species_id')"/>
+                                <p v-if="noSpecies" class="help is-warning">Add some Species to create blogs!</p>
+                            </div>
 
                             <button type="submit" class="button is-large is-primary is-outlined is-fullwidth"
                                     v-text="edit ? 'Update' : 'Save'" />
@@ -60,7 +75,8 @@
         'animal_id': '',
         'species_id': '',
         'name': '',
-        'description': ''
+        'description': '',
+        'noReset': ['species_id']
     });
 
 
@@ -100,7 +116,9 @@
                 edit: undefined,
                 form: form,
                 url: '',
-                species: []
+                species: [],
+                noSpecies: false
+                
             }
         },
         methods: {
@@ -145,10 +163,24 @@
                 this.form.animal_id = this.currentAnimal.animal_id;
                 this.form.name = this.currentAnimal.name;
                 this.form.description = this.currentAnimal.description;
+                this.form.species_id = this.currentAnimal.species_id
 
                 this.form.noReset = ['animal_id', 'name', 'description'];
             } else {
                 this.url = '/animal';
+            }
+        },
+        computed: {
+            loading() {
+                return !this.species.length
+            }
+        },
+
+        watch: {
+            species() {
+                if (!this.loading && this.form.species_id === '') {
+                    this.form.species_id = _.first(this.species).id;
+                }
             }
         }
     }

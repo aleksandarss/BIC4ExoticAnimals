@@ -1899,6 +1899,63 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalsComponent.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AnimalsComponent.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AnimalsListComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AnimalsListComponent */ "./resources/js/components/AnimalsListComponent.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+var getAnimals = function getAnimals() {
+  return new Promise(function (resolve, reject) {
+    axios.get('/list/animal').then(function (response) {
+      resolve(response.data);
+    })["catch"](function (err) {
+      reject(err);
+    });
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    AnimalsList: _AnimalsListComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  name: "AnimalsComponent",
+  data: function data() {
+    return {
+      animals: []
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    getAnimals().then(function (animals) {
+      _this.animals = animals;
+    })["catch"](function (err) {
+      return console.error(err);
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalsFormComponent.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AnimalsFormComponent.vue?vue&type=script&lang=js& ***!
@@ -1969,7 +2026,8 @@ var form = new Form({
   'animal_id': '',
   'species_id': '',
   'name': '',
-  'description': ''
+  'description': '',
+  'noReset': ['species_id']
 });
 
 var getSpecies = function getSpecies() {
@@ -2005,7 +2063,8 @@ var getSpecies = function getSpecies() {
       edit: undefined,
       form: form,
       url: '',
-      species: []
+      species: [],
+      noSpecies: false
     };
   },
   methods: {
@@ -2040,9 +2099,22 @@ var getSpecies = function getSpecies() {
       this.form.animal_id = this.currentAnimal.animal_id;
       this.form.name = this.currentAnimal.name;
       this.form.description = this.currentAnimal.description;
+      this.form.species_id = this.currentAnimal.species_id;
       this.form.noReset = ['animal_id', 'name', 'description'];
     } else {
       this.url = '/animal';
+    }
+  },
+  computed: {
+    loading: function loading() {
+      return !this.species.length;
+    }
+  },
+  watch: {
+    species: function species() {
+      if (!this.loading && this.form.species_id === '') {
+        this.form.species_id = _.first(this.species).id;
+      }
     }
   }
 });
@@ -2105,12 +2177,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AnimalsFormComponent",
   data: function data() {
-    return {
-      animal: getAnimal()
-    };
+    return {};
   },
   props: {
-    animal: {
+    animals: {
       required: true
     }
   },
@@ -2124,6 +2194,79 @@ __webpack_require__.r(__webpack_exports__);
         title: animal.name,
         content: 'Do you really want to delete this animal?',
         url: '/animal/' + animal.slug
+      });
+    }
+  },
+  created: function created() {
+    console.log("LIST COMPONENT CALLED!");
+    console.log("I GOT THESE ANIMALS: ", animals);
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalsSearchComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AnimalsSearchComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AnimalsListComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AnimalsListComponent */ "./resources/js/components/AnimalsListComponent.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var form = new Form({
+  'q': ''
+});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "AnimalSearchComponent",
+  components: {
+    TableElement: TableElement,
+    AnimalsList: _AnimalsListComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      animals: [],
+      animalsFound: false,
+      query: '',
+      form: form,
+      hasAnimals: false
+    };
+  },
+  methods: {
+    submit: function submit() {
+      var _this = this;
+
+      this.hasAnimals = false;
+      this.form.post('/search/animal').then(function (response) {
+        console.log("RESPONSE: ", response);
+        _this.animals = response;
+        _this.hasAnimals = true;
+      })["catch"](function (err) {
+        console.log("SOMETHING WENT WRONG: ", err);
       });
     }
   }
@@ -20455,6 +20598,41 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalsComponent.vue?vue&type=template&id=6cd9df9e&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AnimalsComponent.vue?vue&type=template&id=6cd9df9e& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "columns is-multiline" }, [
+      _c("div", { staticClass: "column" }, [
+        _c(
+          "div",
+          { staticClass: "box custom-box" },
+          [_c("animals-list", { attrs: { animals: _vm.animals } })],
+          1
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalsFormComponent.vue?vue&type=template&id=5119b866&scoped=true&":
 /*!***********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AnimalsFormComponent.vue?vue&type=template&id=5119b866&scoped=true& ***!
@@ -20621,6 +20799,102 @@ var render = function() {
                               )
                             }
                           })
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "field" }, [
+                      _c(
+                        "label",
+                        { staticClass: "label", attrs: { for: "species" } },
+                        [_vm._v("Species")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "control" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "select is-fullwidth",
+                            class: _vm.loading ? "is-loading" : ""
+                          },
+                          [
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.form.species_id,
+                                    expression: "form.species_id"
+                                  }
+                                ],
+                                attrs: { id: "species", disabled: _vm.loading },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.form,
+                                      "species_id",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _vm.loading
+                                  ? _c(
+                                      "option",
+                                      {
+                                        domProps: {
+                                          value: this.form.species_id
+                                        }
+                                      },
+                                      [_vm._v(" Loading...")]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _vm._l(_vm.species, function(spec) {
+                                  return !_vm.loading
+                                    ? _c("option", {
+                                        domProps: {
+                                          value: spec.id,
+                                          textContent: _vm._s(spec.name)
+                                        }
+                                      })
+                                    : _vm._e()
+                                })
+                              ],
+                              2
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _vm.form.errors.has("species_id")
+                        ? _c("p", {
+                            staticClass: "help is-danger",
+                            domProps: {
+                              textContent: _vm._s(
+                                _vm.form.errors.get("species_id")
+                              )
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.noSpecies
+                        ? _c("p", { staticClass: "help is-warning" }, [
+                            _vm._v("Add some Species to create blogs!")
+                          ])
                         : _vm._e()
                     ]),
                     _vm._v(" "),
@@ -33914,7 +34188,7 @@ window.Vue = vue__WEBPACK_IMPORTED_MODULE_0___default.a;
 Vue.component('query-message', __webpack_require__(/*! ./components/base/QueryMessage.vue */ "./resources/js/components/base/QueryMessage.vue")["default"]);
 Vue.component('species', __webpack_require__(/*! ./components/SpeciesComponent.vue */ "./resources/js/components/SpeciesComponent.vue")["default"]);
 Vue.component('species-form', __webpack_require__(/*! ./components/SpeciesFormComponent.vue */ "./resources/js/components/SpeciesFormComponent.vue")["default"]);
-Vue.component('animals', __webpack_require__(/*! ./components/AnimalsListComponent.vue */ "./resources/js/components/AnimalsListComponent.vue")["default"]);
+Vue.component('animals', __webpack_require__(/*! ./components/AnimalsComponent.vue */ "./resources/js/components/AnimalsComponent.vue")["default"]);
 Vue.component('animal-search', __webpack_require__(/*! ./components/AnimalsSearchComponent.vue */ "./resources/js/components/AnimalsSearchComponent.vue")["default"]);
 Vue.component('animal-form', __webpack_require__(/*! ./components/AnimalsFormComponent.vue */ "./resources/js/components/AnimalsFormComponent.vue")["default"]);
 /**
@@ -33996,6 +34270,75 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
+
+/***/ }),
+
+/***/ "./resources/js/components/AnimalsComponent.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/AnimalsComponent.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AnimalsComponent_vue_vue_type_template_id_6cd9df9e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AnimalsComponent.vue?vue&type=template&id=6cd9df9e& */ "./resources/js/components/AnimalsComponent.vue?vue&type=template&id=6cd9df9e&");
+/* harmony import */ var _AnimalsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AnimalsComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/AnimalsComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AnimalsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AnimalsComponent_vue_vue_type_template_id_6cd9df9e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AnimalsComponent_vue_vue_type_template_id_6cd9df9e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/AnimalsComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/AnimalsComponent.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/AnimalsComponent.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./AnimalsComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalsComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/AnimalsComponent.vue?vue&type=template&id=6cd9df9e&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/AnimalsComponent.vue?vue&type=template&id=6cd9df9e& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalsComponent_vue_vue_type_template_id_6cd9df9e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./AnimalsComponent.vue?vue&type=template&id=6cd9df9e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalsComponent.vue?vue&type=template&id=6cd9df9e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalsComponent_vue_vue_type_template_id_6cd9df9e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalsComponent_vue_vue_type_template_id_6cd9df9e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
@@ -34141,7 +34484,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!************************************************************!*\
   !*** ./resources/js/components/AnimalsSearchComponent.vue ***!
   \************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -34988,8 +35331,8 @@ var Form = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\batuh\WebDev\BIC4ExoticAnimals\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\batuh\WebDev\BIC4ExoticAnimals\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! E:\Documents\Faks\FH\4_Semester\IE\BIC4ExoticAnimals\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\Documents\Faks\FH\4_Semester\IE\BIC4ExoticAnimals\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
