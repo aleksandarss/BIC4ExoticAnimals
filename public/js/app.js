@@ -1955,6 +1955,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var form = new Form({
   'animal_id': '',
   'species_id': '',
@@ -2081,6 +2091,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AnimalsFormComponent",
   data: function data() {
@@ -2110,6 +2131,106 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalsSearchComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AnimalsSearchComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['title'],
+  mounted: function mounted() {
+    console.log('I am using the correct component.');
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SpeciesComponent.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/SpeciesComponent.vue?vue&type=script&lang=js& ***!
@@ -2120,6 +2241,15 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SpeciesListComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SpeciesListComponent */ "./resources/js/components/SpeciesListComponent.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2225,6 +2355,16 @@ var getSpecies = function getSpecies() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -20331,26 +20471,14 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c(
-      "h1",
-      {
-        staticClass: "title pb-3 fs-1 customHeaderColorSpeciesList text-center"
-      },
-      [_vm._v(" Create an animal ")]
-    ),
-    _vm._v(" "),
-    _c(
-      "p",
-      { staticClass: "customHeaderColorSpeciesList pb-5 fs-4 text-center" },
-      [_vm._v("Here you can register a new animal to the system.")]
-    ),
+    _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "columns is-multiline" }, [
       _c(
         "div",
         {
           staticClass:
-            "card blog-card column is-half is-offset-one-quarter bg-dark"
+            "card blog-card column is-half is-offset-one-quarter has-background-dark"
         },
         [
           _c("header", { staticClass: "card-header" }, [
@@ -20391,7 +20519,8 @@ var render = function() {
                           _c(
                             "label",
                             {
-                              staticClass: "label text-white",
+                              staticClass:
+                                "label has-text-white has-text-centered",
                               attrs: { for: "name" }
                             },
                             [_vm._v("Name")]
@@ -20449,7 +20578,7 @@ var render = function() {
                       _c(
                         "label",
                         {
-                          staticClass: "label text-white",
+                          staticClass: "label has-text-white has-text-centered",
                           attrs: { for: "description" }
                         },
                         [_vm._v("Description")]
@@ -20514,7 +20643,28 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", { staticClass: "hero" }, [
+      _c("div", { staticClass: "hero-body" }, [
+        _c("div", { staticClass: "container has-text-centered" }, [
+          _c("div", { staticClass: "hero-body" }, [
+            _c("p", { staticClass: "customFontColor title is-size-1" }, [
+              _vm._v("Register a new animal!")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("h2", { staticClass: "subtitle" }, [
+            _vm._v("Here you can register a new animal to the system.")
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -20537,80 +20687,119 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
+    _vm._m(0),
+    _vm._v(" "),
     _c("div", { staticClass: "columns is-multiline" }, [
       _c("div", { staticClass: "column" }, [
         _c("div", { staticClass: "box custom-box" }, [
           _c("div", { staticClass: "table-container is-fullwidth" }, [
-            _c("table", { staticClass: "table is-fullwidth is-hoverable" }, [
-              _c("thead", [
-                _c(
-                  "tr",
-                  { staticClass: "title is-5" },
-                  [
-                    _c("table-element", { attrs: { "element-type": "th" } }, [
-                      _vm._v("Name")
-                    ]),
-                    _vm._v(" "),
-                    _c("table-element", { attrs: { "element-type": "th" } }, [
-                      _vm._v("Description")
-                    ]),
-                    _vm._v(" "),
-                    _c("table-element", { attrs: { "element-type": "th" } }, [
-                      _vm._v("Species")
-                    ]),
-                    _vm._v(" "),
-                    _c("table-element", { attrs: { "element-type": "th" } }, [
-                      _vm._v("Created")
-                    ]),
-                    _vm._v(" "),
-                    _c("table-element", { attrs: { "element-type": "th" } }, [
-                      _vm._v("Modified")
-                    ])
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.animals, function(animal) {
-                  return _c(
+            _c(
+              "table",
+              {
+                staticClass: "table table is-striped is-fullwidth is-hoverable"
+              },
+              [
+                _c("thead", [
+                  _c(
                     "tr",
-                    { key: animal.id },
+                    { staticClass: "title is-5" },
                     [
-                      _c("table-element", { attrs: { "element-type": "td" } }, [
-                        _vm._v(_vm._s(animal.name))
+                      _c("table-element", { attrs: { "element-type": "th" } }, [
+                        _vm._v("Name")
                       ]),
                       _vm._v(" "),
-                      _c("table-element", { attrs: { "element-type": "td" } }, [
-                        _vm._v(_vm._s(animal.description))
+                      _c("table-element", { attrs: { "element-type": "th" } }, [
+                        _vm._v("Description")
                       ]),
                       _vm._v(" "),
-                      _c("table-element", { attrs: { "element-type": "td" } }, [
-                        _vm._v(_vm._s(animal.species.name))
+                      _c("table-element", { attrs: { "element-type": "th" } }, [
+                        _vm._v("Species")
                       ]),
                       _vm._v(" "),
-                      _c("table-element", { attrs: { "element-type": "td" } }, [
-                        _vm._v(_vm._s(animal.created_at))
+                      _c("table-element", { attrs: { "element-type": "th" } }, [
+                        _vm._v("Created")
                       ]),
                       _vm._v(" "),
-                      _c("table-element", { attrs: { "element-type": "td" } }, [
-                        _vm._v(_vm._s(animal.updated_at))
+                      _c("table-element", { attrs: { "element-type": "th" } }, [
+                        _vm._v("Modified")
                       ])
                     ],
                     1
                   )
-                }),
-                0
-              )
-            ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.animals, function(animal) {
+                    return _c(
+                      "tr",
+                      { key: animal.id },
+                      [
+                        _c(
+                          "table-element",
+                          { attrs: { "element-type": "td" } },
+                          [_vm._v(_vm._s(animal.name))]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "table-element",
+                          { attrs: { "element-type": "td" } },
+                          [_vm._v(_vm._s(animal.description))]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "table-element",
+                          { attrs: { "element-type": "td" } },
+                          [_vm._v(_vm._s(animal.species.name))]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "table-element",
+                          { attrs: { "element-type": "td" } },
+                          [_vm._v(_vm._s(animal.created_at))]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "table-element",
+                          { attrs: { "element-type": "td" } },
+                          [_vm._v(_vm._s(animal.updated_at))]
+                        )
+                      ],
+                      1
+                    )
+                  }),
+                  0
+                )
+              ]
+            )
           ])
         ])
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", { staticClass: "hero" }, [
+      _c("div", { staticClass: "hero-body" }, [
+        _c("div", { staticClass: "container has-text-centered" }, [
+          _c("div", { staticClass: "hero-body" }, [
+            _c("p", { staticClass: "customFontColor title is-size-1" }, [
+              _vm._v("The list of all registered animals!")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("h2", { staticClass: "subtitle" }, [
+            _vm._v("See all animals registered in our system.")
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -20633,79 +20822,144 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c(
-      "h1",
-      {
-        staticClass: "title pb-3 fs-1 customHeaderColorSpeciesList text-center"
-      },
-      [_vm._v(" Search for a specific animal ")]
-    ),
-    _vm._v(" "),
     _vm._m(0),
     _vm._v(" "),
-    _c("table", { staticClass: "table is-fullwidth is-hoverable" }, [
-      _c("thead", [
+    _c("section", { staticClass: "hero" }, [
+      _c("div", { staticClass: "columns is-multiline" }, [
         _c(
-          "tr",
-          { staticClass: "title is-6 text-center" },
+          "div",
+          {
+            staticClass:
+              "card column is-half is-offset-one-quarter has-background-dark"
+          },
           [
-            _c("table-element", { attrs: { "element-type": "th" } }, [
-              _vm._v("Name")
+            _c("header", { staticClass: "card-header" }, [
+              _c("h1", { staticClass: "card-header-title is-centered" }, [
+                _vm._v(
+                  "\n                  " +
+                    _vm._s("Search Animal") +
+                    "\n               "
+                )
+              ])
             ]),
             _vm._v(" "),
-            _c("table-element", { attrs: { "element-type": "th" } }, [
-              _vm._v("Description")
-            ]),
-            _vm._v(" "),
-            _c("table-element", { attrs: { "element-type": "th" } }, [
-              _vm._v("Animals")
-            ]),
-            _vm._v(" "),
-            _c("table-element", { attrs: { "element-type": "th" } }, [
-              _vm._v("Created")
-            ]),
-            _vm._v(" "),
-            _c("table-element", { attrs: { "element-type": "th" } }, [
-              _vm._v("Modified")
-            ]),
-            _vm._v(" "),
-            _c("table-element", { attrs: { "element-type": "th" } })
-          ],
-          1
+            _c("div", { staticClass: "card-content" }, [
+              _c(
+                "div",
+                { staticClass: "content" },
+                [
+                  _vm._t("default", [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _vm._m(3)
+                  ])
+                ],
+                2
+              )
+            ])
+          ]
         )
       ]),
       _vm._v(" "),
-      _c("tbody", [
-        _c(
-          "tr",
-          { staticClass: "title is-6 text-center" },
-          [
-            _c("table-element", { attrs: { "element-type": "td" } }, [
-              _vm._v("Hallo")
-            ]),
-            _vm._v(" "),
-            _c("table-element", { attrs: { "element-type": "td" } }, [
-              _vm._v("Batuhan")
-            ]),
-            _vm._v(" "),
-            _c("table-element", { attrs: { "element-type": "td" } }, [
-              _vm._v("das")
-            ]),
-            _vm._v(" "),
-            _c("table-element", { attrs: { "element-type": "td" } }, [
-              _vm._v("ist")
-            ]),
-            _vm._v(" "),
-            _c("table-element", { attrs: { "element-type": "td" } }, [
-              _vm._v("test")
-            ]),
-            _vm._v(" "),
-            _c("table-element", { attrs: { "element-type": "td" } }, [
-              _vm._v("asdasd")
+      _c("div", { staticClass: "columns is-multiline" }, [
+        _c("div", { staticClass: "column" }, [
+          _c("div", { staticClass: "box custom-box" }, [
+            _c("div", { staticClass: "table-container is-fullwidth" }, [
+              _c(
+                "table",
+                {
+                  staticClass:
+                    "table table is-striped is-fullwidth is-hoverable has-text-centered"
+                },
+                [
+                  _c("thead", [
+                    _c(
+                      "tr",
+                      { staticClass: "title is-5" },
+                      [
+                        _c(
+                          "table-element",
+                          { attrs: { "element-type": "th" } },
+                          [_vm._v("Name")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "table-element",
+                          { attrs: { "element-type": "th" } },
+                          [_vm._v("Description")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "table-element",
+                          { attrs: { "element-type": "th" } },
+                          [_vm._v("Species")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "table-element",
+                          { attrs: { "element-type": "th" } },
+                          [_vm._v("Created")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "table-element",
+                          { attrs: { "element-type": "th" } },
+                          [_vm._v("Modified")]
+                        )
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.animals, function(animal) {
+                      return _c(
+                        "tr",
+                        { key: animal.id },
+                        [
+                          _c(
+                            "table-element",
+                            { attrs: { "element-type": "td" } },
+                            [_vm._v(_vm._s(animal.name))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "table-element",
+                            { attrs: { "element-type": "td" } },
+                            [_vm._v(_vm._s(animal.description))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "table-element",
+                            { attrs: { "element-type": "td" } },
+                            [_vm._v(_vm._s(animal.species.name))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "table-element",
+                            { attrs: { "element-type": "td" } },
+                            [_vm._v(_vm._s(animal.created_at))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "table-element",
+                            { attrs: { "element-type": "td" } },
+                            [_vm._v(_vm._s(animal.updated_at))]
+                          )
+                        ],
+                        1
+                      )
+                    }),
+                    0
+                  )
+                ]
+              )
             ])
-          ],
-          1
-        )
+          ])
+        ])
       ])
     ])
   ])
@@ -20715,46 +20969,70 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "nav",
-      {
-        staticClass:
-          "navbar navbar-expand-lg bg-light mb-3 justify-content-center"
-      },
-      [
-        _c("div", { staticClass: "d-flex" }, [
-          _c(
-            "p",
-            {
-              staticClass: "p-2 flex-fill bd-highlight align-self-center fs-4"
-            },
-            [_vm._v("Search for animal by name:")]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-fill bd-highlight" }, [
-            _c("form", { staticClass: "d-flex" }, [
-              _c("input", {
-                staticClass: "form-control me-3",
-                attrs: {
-                  type: "search",
-                  placeholder: "Search",
-                  "aria-label": "Search"
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-outline-success",
-                  attrs: { type: "submit" }
-                },
-                [_vm._v("Search")]
-              )
+    return _c("section", { staticClass: "hero" }, [
+      _c("div", { staticClass: "hero-body" }, [
+        _c("div", { staticClass: "container has-text-centered" }, [
+          _c("div", { staticClass: "hero-body" }, [
+            _c("p", { staticClass: "customFontColor title is-size-1" }, [
+              _vm._v("Search for a animal!")
             ])
+          ]),
+          _vm._v(" "),
+          _c("h2", { staticClass: "subtitle" }, [
+            _vm._v(
+              "Just type in the name of the animal you want to search for."
+            )
           ])
         ])
-      ]
-    )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "field" }, [
+      _c("label", { staticClass: "label has-text-white has-text-centered" }, [
+        _vm._v("Name of animal")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "control" }, [
+        _c("input", {
+          staticClass: "input",
+          attrs: { type: "text", placeholder: "Text input" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "field" }, [
+      _c("label", { staticClass: "label has-text-white has-text-centered" }, [
+        _vm._v("Select species")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "control" }, [
+        _c("div", { staticClass: "select" }, [
+          _c("select", [
+            _c("option", [_vm._v("Select dropdown")]),
+            _vm._v(" "),
+            _c("option", [_vm._v("With options")])
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "control" }, [
+      _c("button", { staticClass: "button is-link is-success" }, [
+        _vm._v("Submit")
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -20793,20 +21071,7 @@ var render = function() {
               ? _c("success-box", { attrs: { message: _vm.successMessage } })
               : _vm._e(),
             _vm._v(" "),
-            _c(
-              "h1",
-              {
-                staticClass:
-                  "title pb-3 fs-1 customHeaderColorSpeciesList text-center"
-              },
-              [_vm._v(" Species List ")]
-            ),
-            _vm._v(" "),
-            _c("p", { staticClass: "customHeaderColorSpeciesList pb-3 fs-4" }, [
-              _vm._v(
-                "Here you can see and manage all species registered in the database. \n                You have the ability to edit the species or delete them from the database!"
-              )
-            ]),
+            _vm._m(0),
             _vm._v(" "),
             _vm.hasSpecies
               ? _c(
@@ -20822,7 +21087,7 @@ var render = function() {
                 )
               : _vm._e(),
             _vm._v(" "),
-            _vm._m(0),
+            _vm._m(1),
             _vm._v(" "),
             !_vm.hasSpecies
               ? _c("error-box", { attrs: { message: "No species found" } })
@@ -20851,8 +21116,33 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "float-end" }, [
-      _c("a", { attrs: { href: "#" } }, [_vm._v("Back to top")])
+    return _c("section", { staticClass: "hero" }, [
+      _c("div", { staticClass: "hero-body" }, [
+        _c("div", { staticClass: "container has-text-centered" }, [
+          _c("div", { staticClass: "hero-body" }, [
+            _c("p", { staticClass: "customFontColor title is-size-1" }, [
+              _vm._v("The List of all species!")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("h2", { staticClass: "subtitle" }, [
+            _vm._v(
+              "Here you can see and manage all species registered in the database. \n                        You have the ability to edit the species or delete them from the database!"
+            )
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "float-end button is-rounded" }, [
+      _c("a", { staticClass: "has-text-black", attrs: { href: "#" } }, [
+        _c("i", { staticClass: "fas fa-arrow-up" }),
+        _vm._v(" Back to top")
+      ])
     ])
   }
 ]
@@ -20878,30 +21168,14 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c(
-      "h1",
-      {
-        staticClass: "title pb-3 fs-1 customHeaderColorSpeciesList text-center"
-      },
-      [_vm._v(" Create Species ")]
-    ),
-    _vm._v(" "),
-    _c(
-      "p",
-      { staticClass: "customHeaderColorSpeciesList pb-5 fs-4 text-center" },
-      [
-        _vm._v(
-          "Here you can register a new species to the system. \n        Just type the species name and add a description!"
-        )
-      ]
-    ),
+    _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "columns is-multiline" }, [
       _c(
         "div",
         {
           staticClass:
-            "card blog-card column is-half is-offset-one-quarter bg-dark"
+            "card blog-card column is-half is-offset-one-quarter has-background-dark"
         },
         [
           _c("header", { staticClass: "card-header" }, [
@@ -20942,7 +21216,8 @@ var render = function() {
                           _c(
                             "label",
                             {
-                              staticClass: "label text-white",
+                              staticClass:
+                                "label has-text-white has-text-centered",
                               attrs: { for: "name" }
                             },
                             [_vm._v("Name")]
@@ -21000,7 +21275,7 @@ var render = function() {
                       _c(
                         "label",
                         {
-                          staticClass: "label text-white",
+                          staticClass: "label has-text-white has-text-centered",
                           attrs: { for: "description" }
                         },
                         [_vm._v("Description")]
@@ -21065,7 +21340,30 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", { staticClass: "hero" }, [
+      _c("div", { staticClass: "hero-body" }, [
+        _c("div", { staticClass: "container has-text-centered" }, [
+          _c("div", { staticClass: "hero-body" }, [
+            _c("p", { staticClass: "customFontColor title is-size-1" }, [
+              _vm._v("Create a new species!")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("h2", { staticClass: "subtitle" }, [
+            _vm._v(
+              "Here you can register a new species to the system. \n                Just type the species name and add a description!"
+            )
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -33849,15 +34147,17 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AnimalsSearchComponent_vue_vue_type_template_id_59dd8669___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AnimalsSearchComponent.vue?vue&type=template&id=59dd8669& */ "./resources/js/components/AnimalsSearchComponent.vue?vue&type=template&id=59dd8669&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _AnimalsSearchComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AnimalsSearchComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/AnimalsSearchComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AnimalsSearchComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _AnimalsSearchComponent_vue_vue_type_template_id_59dd8669___WEBPACK_IMPORTED_MODULE_0__["render"],
   _AnimalsSearchComponent_vue_vue_type_template_id_59dd8669___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
@@ -33871,6 +34171,20 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 if (false) { var api; }
 component.options.__file = "resources/js/components/AnimalsSearchComponent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/AnimalsSearchComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/AnimalsSearchComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalsSearchComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./AnimalsSearchComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalsSearchComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AnimalsSearchComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 

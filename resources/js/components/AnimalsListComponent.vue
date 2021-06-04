@@ -1,10 +1,21 @@
 <template>
     <div class="container">
+        <!-- Head -->
+        <section class="hero">
+            <div class="hero-body">
+                <div class="container has-text-centered">
+                <div class="hero-body"> 
+                    <p class="customFontColor title is-size-1">The list of all registered animals!</p>
+                </div>
+                <h2 class="subtitle">See all animals registered in our system.</h2>
+                </div>
+            </div>
+        </section>
         <div class="columns is-multiline">
             <div class="column">
                 <div class="box custom-box">
                     <div class="table-container is-fullwidth">
-                        <table class="table is-fullwidth is-hoverable">
+                        <table class="table table is-striped is-fullwidth is-hoverable">
                             <thead>
                                 <tr class="title is-5">
                                     <table-element element-type="th">Name</table-element>
