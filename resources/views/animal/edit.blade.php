@@ -3,8 +3,6 @@
 
 @section('content')
     <section class="section">
-        <div class="container">
-            <h1>Edit animal</h1>
-        </div>
+        <animal-form :is-editable="true" :current-animal="{{ $animal }}"></animal-form>
     </section>
 @endsection

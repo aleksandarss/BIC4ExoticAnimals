@@ -4,13 +4,22 @@
         <div class="columns is-multiline">
             <div class="column">
                 <success-box :message="successMessage" v-if="showSuccessMessage"></success-box>
-                <h1 class="title pb-3 fs-1 customHeaderColorSpeciesList text-center"> Species List </h1>
-                <p class="customHeaderColorSpeciesList pb-3 fs-4">Here you can see and manage all species registered in the database. 
-                    You have the ability to edit the species or delete them from the database!</p>
+                <!-- Head -->
+                <section class="hero">
+                    <div class="hero-body">
+                        <div class="container has-text-centered">
+                        <div class="hero-body"> 
+                            <p class="customFontColor title is-size-1">The List of all species!</p>
+                        </div>
+                        <h2 class="subtitle">Here you can see and manage all species registered in the database. 
+                            You have the ability to edit the species or delete them from the database!</h2>
+                        </div>
+                    </div>
+                </section>    
                 <div class="box custom-box " v-if="hasSpecies">
                     <species-list :species="species" v-on:open-modal="setModal"></species-list>
                 </div>
-                <p class="float-end"><a href="#">Back to top</a></p>
+                <p class="float-end button is-rounded"><a class="has-text-black" href="#"><i class="fas fa-arrow-up"></i>&nbsp;Back to top</a></p>
                 <error-box message="No species found" v-if="!hasSpecies"></error-box>
             </div>
         </div>

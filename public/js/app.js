@@ -1921,6 +1921,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 var getAnimals = function getAnimals() {
@@ -1935,12 +1947,21 @@ var getAnimals = function getAnimals() {
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    AnimalsList: _AnimalsListComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
+    AnimalsList: _AnimalsListComponent__WEBPACK_IMPORTED_MODULE_0__["default"],
+    ErrorBox: ErrorBox,
+    SuccessBox: SuccessBox,
+    DeleteModal: DeleteModal
   },
   name: "AnimalsComponent",
   data: function data() {
     return {
-      animals: []
+      animals: [],
+      modalActive: false,
+      modalTitle: '',
+      modalContent: '',
+      modalUrl: '',
+      modalId: 0,
+      successMessage: ''
     };
   },
   created: function created() {
@@ -1951,6 +1972,27 @@ var getAnimals = function getAnimals() {
     })["catch"](function (err) {
       return console.error(err);
     });
+  },
+  methods: {
+    toggleModal: function toggleModal(info) {
+      this.modalActive = !this.modalActive;
+
+      if (info.id !== 0) {
+        this.animals = _.remove(this.animals, function (anim) {
+          return anim.id !== info.id;
+        });
+        this.successMessage = info.message;
+      }
+    },
+    setModal: function setModal(data) {
+      this.modalId = data.id;
+      this.modalTitle = data.title;
+      this.modalContent = data.content;
+      this.modalUrl = data.url;
+      this.toggleModal({
+        id: 0
+      });
+    }
   }
 });
 
@@ -1965,6 +2007,16 @@ var getAnimals = function getAnimals() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2160,6 +2212,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AnimalsFormComponent",
   data: function data() {
@@ -2175,6 +2243,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     openDeleteModal: function openDeleteModal(animal) {
+      console.log("OPENING DELETE MODAL ...");
       this.$emit('open-modal', {
         id: animal.id,
         title: animal.name,
@@ -2185,7 +2254,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     console.log("LIST COMPONENT CALLED!");
-    console.log("I GOT THESE ANIMALS: ", animals);
   }
 });
 
@@ -2201,6 +2269,35 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AnimalsListComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AnimalsListComponent */ "./resources/js/components/AnimalsListComponent.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2270,6 +2367,15 @@ var form = new Form({
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SpeciesListComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SpeciesListComponent */ "./resources/js/components/SpeciesListComponent.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2375,6 +2481,16 @@ var getSpecies = function getSpecies() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -20480,20 +20596,64 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "columns is-multiline" }, [
-      _c("div", { staticClass: "column" }, [
-        _c(
-          "div",
-          { staticClass: "box custom-box" },
-          [_c("animals-list", { attrs: { animals: _vm.animals } })],
-          1
-        )
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c("div", { staticClass: "columns is-multiline" }, [
+        _c("div", { staticClass: "column" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "box custom-box" },
+            [
+              _c("animals-list", {
+                attrs: { animals: _vm.animals },
+                on: { "open-modal": _vm.setModal }
+              })
+            ],
+            1
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("delete-modal", {
+        attrs: {
+          title: _vm.modalTitle,
+          "delete-url": _vm.modalUrl,
+          active: _vm.modalActive,
+          content: _vm.modalContent,
+          "entry-id": _vm.modalId
+        },
+        on: { "close-modal": _vm.toggleModal }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", { staticClass: "hero" }, [
+      _c("div", { staticClass: "hero-body" }, [
+        _c("div", { staticClass: "container has-text-centered" }, [
+          _c("div", { staticClass: "hero-body" }, [
+            _c("p", { staticClass: "customFontColor title is-size-1" }, [
+              _vm._v("The list of all registered animals!")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("h2", { staticClass: "subtitle" }, [
+            _vm._v("See all animals registered in our system.")
+          ])
+        ])
       ])
     ])
-  ])
-}
-var staticRenderFns = []
+  }
+]
 render._withStripped = true
 
 
@@ -20516,26 +20676,14 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c(
-      "h1",
-      {
-        staticClass: "title pb-3 fs-1 customHeaderColorSpeciesList text-center"
-      },
-      [_vm._v(" Create an animal ")]
-    ),
-    _vm._v(" "),
-    _c(
-      "p",
-      { staticClass: "customHeaderColorSpeciesList pb-5 fs-4 text-center" },
-      [_vm._v("Here you can register a new animal to the system.")]
-    ),
+    _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "columns is-multiline" }, [
       _c(
         "div",
         {
           staticClass:
-            "card blog-card column is-half is-offset-one-quarter bg-dark"
+            "card blog-card column is-half is-offset-one-quarter has-background-dark"
         },
         [
           _c("header", { staticClass: "card-header" }, [
@@ -20576,7 +20724,8 @@ var render = function() {
                           _c(
                             "label",
                             {
-                              staticClass: "label text-white",
+                              staticClass:
+                                "label has-text-white has-text-centered",
                               attrs: { for: "name" }
                             },
                             [_vm._v("Name")]
@@ -20634,7 +20783,7 @@ var render = function() {
                       _c(
                         "label",
                         {
-                          staticClass: "label text-white",
+                          staticClass: "label has-text-white has-text-centered",
                           attrs: { for: "description" }
                         },
                         [_vm._v("Description")]
@@ -20795,7 +20944,28 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", { staticClass: "hero" }, [
+      _c("div", { staticClass: "hero-body" }, [
+        _c("div", { staticClass: "container has-text-centered" }, [
+          _c("div", { staticClass: "hero-body" }, [
+            _c("p", { staticClass: "customFontColor title is-size-1" }, [
+              _vm._v("Register a new animal!")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("h2", { staticClass: "subtitle" }, [
+            _vm._v("Here you can register a new animal to the system.")
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -20822,7 +20992,7 @@ var render = function() {
       _c("thead", [
         _c(
           "tr",
-          { staticClass: "title is-5" },
+          { staticClass: "title is-6" },
           [
             _c("table-element", { attrs: { "element-type": "th" } }, [
               _vm._v("Name")
@@ -20842,7 +21012,9 @@ var render = function() {
             _vm._v(" "),
             _c("table-element", { attrs: { "element-type": "th" } }, [
               _vm._v("Modified")
-            ])
+            ]),
+            _vm._v(" "),
+            _c("table-element", { attrs: { "element-type": "th" } })
           ],
           1
         )
@@ -20873,6 +21045,40 @@ var render = function() {
               _vm._v(" "),
               _c("table-element", { attrs: { "element-type": "td" } }, [
                 _vm._v(_vm._s(animal.updated_at))
+              ]),
+              _vm._v(" "),
+              _c("table-element", { attrs: { "element-type": "td" } }, [
+                _c("p", { staticClass: "buttons" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "button is-info is-outlined ",
+                      attrs: { href: "/animal/" + animal.slug + "/edit" }
+                    },
+                    [
+                      _c("span", { staticClass: "icon" }, [
+                        _c("i", { staticClass: "fa fa-edit" })
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button is-danger is-outlined",
+                      on: {
+                        click: function($event) {
+                          return _vm.openDeleteModal(animal)
+                        }
+                      }
+                    },
+                    [
+                      _c("span", { staticClass: "icon" }, [
+                        _c("i", { staticClass: "fa fa-remove" })
+                      ])
+                    ]
+                  )
+                ])
               ])
             ],
             1
@@ -20880,10 +21086,24 @@ var render = function() {
         }),
         0
       )
-    ])
+    ]),
+    _vm._v(" "),
+    _vm._m(0)
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "float-end button is-rounded" }, [
+      _c("a", { staticClass: "has-text-black", attrs: { href: "#" } }, [
+        _c("i", { staticClass: "fas fa-arrow-up" }),
+        _vm._v(" Back to top")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -20906,96 +21126,148 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c(
-      "h1",
-      {
-        staticClass: "title pb-3 fs-1 customHeaderColorSpeciesList text-center"
-      },
-      [_vm._v(" Search for a specific animal ")]
-    ),
+    _vm._m(0),
     _vm._v(" "),
-    _c(
-      "nav",
-      {
-        staticClass:
-          "navbar navbar-expand-lg bg-light mb-3 justify-content-center"
-      },
-      [
-        _c("div", { staticClass: "d-flex" }, [
-          _c(
-            "p",
-            {
-              staticClass: "p-2 flex-fill bd-highlight align-self-center fs-4"
-            },
-            [_vm._v("Search for animal by name:")]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-fill bd-highlight" }, [
-            _c(
-              "form",
-              {
-                staticClass: "d-flex",
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.submit($event)
-                  }
-                }
-              },
-              [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.form.q,
-                      expression: "form.q"
-                    }
-                  ],
-                  staticClass: "form-control me-3",
-                  attrs: {
-                    type: "search",
-                    placeholder: "Search",
-                    "aria-label": "Search",
-                    id: "q"
-                  },
-                  domProps: { value: _vm.form.q },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.form, "q", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-outline-success",
-                    attrs: { type: "submit" }
-                  },
-                  [_vm._v("Search")]
+    _c("section", { staticClass: "hero" }, [
+      _c("div", { staticClass: "columns is-multiline" }, [
+        _c(
+          "div",
+          {
+            staticClass:
+              "card column is-half is-offset-one-quarter has-background-dark"
+          },
+          [
+            _c("header", { staticClass: "card-header" }, [
+              _c("h1", { staticClass: "card-header-title is-centered" }, [
+                _vm._v(
+                  "\n                  " +
+                    _vm._s("Search Animal") +
+                    "\n               "
                 )
-              ]
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-content" }, [
+              _c(
+                "div",
+                { staticClass: "content" },
+                [
+                  _vm._t("default", [
+                    _c(
+                      "form",
+                      {
+                        staticClass: "field",
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.submit($event)
+                          }
+                        }
+                      },
+                      [
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "control field" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.q,
+                                expression: "form.q"
+                              }
+                            ],
+                            staticClass: "input",
+                            attrs: {
+                              type: "text",
+                              placeholder: "Text input",
+                              id: "q"
+                            },
+                            domProps: { value: _vm.form.q },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.form, "q", $event.target.value)
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(2)
+                      ]
+                    )
+                  ])
+                ],
+                2
+              )
+            ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "columns is-multiline" }, [
+        _c("div", { staticClass: "column" }, [
+          _vm.hasAnimals
+            ? _c(
+                "div",
+                { staticClass: "box custom-box" },
+                [_c("animals-list", { attrs: { animals: _vm.animals } })],
+                1
+              )
+            : _vm._e()
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", { staticClass: "hero" }, [
+      _c("div", { staticClass: "hero-body" }, [
+        _c("div", { staticClass: "container has-text-centered" }, [
+          _c("div", { staticClass: "hero-body" }, [
+            _c("p", { staticClass: "customFontColor title is-size-1" }, [
+              _vm._v("Search for a animal!")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("h2", { staticClass: "subtitle" }, [
+            _vm._v(
+              "Just type in the name of the animal you want to search for."
             )
           ])
         ])
-      ]
-    ),
-    _vm._v(" "),
-    _vm.hasAnimals
-      ? _c(
-          "div",
-          { staticClass: "box custom-box " },
-          [_c("animals-list", { attrs: { animals: _vm.animals } })],
-          1
-        )
-      : _vm._e()
-  ])
-}
-var staticRenderFns = []
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "field" }, [
+      _c("label", { staticClass: "label has-text-white has-text-centered" }, [
+        _vm._v("Name of animal")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "control field" }, [
+      _c(
+        "button",
+        { staticClass: "button is-link is-success", attrs: { type: "submit" } },
+        [_vm._v("Submit")]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -21032,20 +21304,7 @@ var render = function() {
               ? _c("success-box", { attrs: { message: _vm.successMessage } })
               : _vm._e(),
             _vm._v(" "),
-            _c(
-              "h1",
-              {
-                staticClass:
-                  "title pb-3 fs-1 customHeaderColorSpeciesList text-center"
-              },
-              [_vm._v(" Species List ")]
-            ),
-            _vm._v(" "),
-            _c("p", { staticClass: "customHeaderColorSpeciesList pb-3 fs-4" }, [
-              _vm._v(
-                "Here you can see and manage all species registered in the database. \n                You have the ability to edit the species or delete them from the database!"
-              )
-            ]),
+            _vm._m(0),
             _vm._v(" "),
             _vm.hasSpecies
               ? _c(
@@ -21061,7 +21320,7 @@ var render = function() {
                 )
               : _vm._e(),
             _vm._v(" "),
-            _vm._m(0),
+            _vm._m(1),
             _vm._v(" "),
             !_vm.hasSpecies
               ? _c("error-box", { attrs: { message: "No species found" } })
@@ -21090,8 +21349,33 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "float-end" }, [
-      _c("a", { attrs: { href: "#" } }, [_vm._v("Back to top")])
+    return _c("section", { staticClass: "hero" }, [
+      _c("div", { staticClass: "hero-body" }, [
+        _c("div", { staticClass: "container has-text-centered" }, [
+          _c("div", { staticClass: "hero-body" }, [
+            _c("p", { staticClass: "customFontColor title is-size-1" }, [
+              _vm._v("The List of all species!")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("h2", { staticClass: "subtitle" }, [
+            _vm._v(
+              "Here you can see and manage all species registered in the database. \n                        You have the ability to edit the species or delete them from the database!"
+            )
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "float-end button is-rounded" }, [
+      _c("a", { staticClass: "has-text-black", attrs: { href: "#" } }, [
+        _c("i", { staticClass: "fas fa-arrow-up" }),
+        _vm._v(" Back to top")
+      ])
     ])
   }
 ]
@@ -21117,30 +21401,14 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c(
-      "h1",
-      {
-        staticClass: "title pb-3 fs-1 customHeaderColorSpeciesList text-center"
-      },
-      [_vm._v(" Create Species ")]
-    ),
-    _vm._v(" "),
-    _c(
-      "p",
-      { staticClass: "customHeaderColorSpeciesList pb-5 fs-4 text-center" },
-      [
-        _vm._v(
-          "Here you can register a new species to the system. \n        Just type the species name and add a description!"
-        )
-      ]
-    ),
+    _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "columns is-multiline" }, [
       _c(
         "div",
         {
           staticClass:
-            "card blog-card column is-half is-offset-one-quarter bg-dark"
+            "card blog-card column is-half is-offset-one-quarter has-background-dark"
         },
         [
           _c("header", { staticClass: "card-header" }, [
@@ -21181,7 +21449,8 @@ var render = function() {
                           _c(
                             "label",
                             {
-                              staticClass: "label text-white",
+                              staticClass:
+                                "label has-text-white has-text-centered",
                               attrs: { for: "name" }
                             },
                             [_vm._v("Name")]
@@ -21239,7 +21508,7 @@ var render = function() {
                       _c(
                         "label",
                         {
-                          staticClass: "label text-white",
+                          staticClass: "label has-text-white has-text-centered",
                           attrs: { for: "description" }
                         },
                         [_vm._v("Description")]
@@ -21304,7 +21573,30 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", { staticClass: "hero" }, [
+      _c("div", { staticClass: "hero-body" }, [
+        _c("div", { staticClass: "container has-text-centered" }, [
+          _c("div", { staticClass: "hero-body" }, [
+            _c("p", { staticClass: "customFontColor title is-size-1" }, [
+              _vm._v("Create a new species!")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("h2", { staticClass: "subtitle" }, [
+            _vm._v(
+              "Here you can register a new species to the system. \n                Just type the species name and add a description!"
+            )
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -34151,15 +34443,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!************************************************************!*\
   !*** ./resources/js/components/AnimalsSearchComponent.vue ***!
   \************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AnimalsSearchComponent_vue_vue_type_template_id_59dd8669___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AnimalsSearchComponent.vue?vue&type=template&id=59dd8669& */ "./resources/js/components/AnimalsSearchComponent.vue?vue&type=template&id=59dd8669&");
 /* harmony import */ var _AnimalsSearchComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AnimalsSearchComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/AnimalsSearchComponent.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _AnimalsSearchComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _AnimalsSearchComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -34189,7 +34480,7 @@ component.options.__file = "resources/js/components/AnimalsSearchComponent.vue"
 /*!*************************************************************************************!*\
   !*** ./resources/js/components/AnimalsSearchComponent.vue?vue&type=script&lang=js& ***!
   \*************************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
