@@ -83,15 +83,15 @@
     const getSpecies = () => {
         return new Promise((resolve, reject) => {
             axios.get('/list/species')
-            .then((response) => {
-                console.log("LOADED SPECIES: ", response);
+                .then((response) => {
+                    console.log("LOADED SPECIES: ", response);
 
-                resolve(response.data);
-            })
-            .catch((err) => {
-                console.error("Something went wrong while fetching species: ", err);
-                reject(err);
-            });
+                    resolve(response.data);
+                })
+                .catch((err) => {
+                    console.error("Something went wrong while fetching species: ", err);
+                    reject(err);
+                });
         });
     }
 

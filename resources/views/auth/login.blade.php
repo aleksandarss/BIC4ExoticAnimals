@@ -18,7 +18,7 @@
             </div>
         </div>
     </section>
-    <section class="section is-fullheight">
+    <section class="section">
         <div class="container has-text-centered">
             <div class="columns is-multiline">
                 <div class="card custom-card column is-half is-offset-one-quarter">

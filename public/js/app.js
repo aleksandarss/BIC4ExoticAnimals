@@ -1921,6 +1921,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 var getAnimals = function getAnimals() {
@@ -1935,12 +1947,21 @@ var getAnimals = function getAnimals() {
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    AnimalsList: _AnimalsListComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
+    AnimalsList: _AnimalsListComponent__WEBPACK_IMPORTED_MODULE_0__["default"],
+    ErrorBox: ErrorBox,
+    SuccessBox: SuccessBox,
+    DeleteModal: DeleteModal
   },
   name: "AnimalsComponent",
   data: function data() {
     return {
-      animals: []
+      animals: [],
+      modalActive: false,
+      modalTitle: '',
+      modalContent: '',
+      modalUrl: '',
+      modalId: 0,
+      successMessage: ''
     };
   },
   created: function created() {
@@ -1951,6 +1972,27 @@ var getAnimals = function getAnimals() {
     })["catch"](function (err) {
       return console.error(err);
     });
+  },
+  methods: {
+    toggleModal: function toggleModal(info) {
+      this.modalActive = !this.modalActive;
+
+      if (info.id !== 0) {
+        this.animals = _.remove(this.animals, function (anim) {
+          return anim.id !== info.id;
+        });
+        this.successMessage = info.message;
+      }
+    },
+    setModal: function setModal(data) {
+      this.modalId = data.id;
+      this.modalTitle = data.title;
+      this.modalContent = data.content;
+      this.modalUrl = data.url;
+      this.toggleModal({
+        id: 0
+      });
+    }
   }
 });
 
@@ -1965,6 +2007,21 @@ var getAnimals = function getAnimals() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2171,9 +2228,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AnimalsFormComponent",
   data: function data() {
@@ -2189,6 +2243,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     openDeleteModal: function openDeleteModal(animal) {
+      console.log("OPENING DELETE MODAL ...");
       this.$emit('open-modal', {
         id: animal.id,
         title: animal.name,
@@ -2199,7 +2254,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     console.log("LIST COMPONENT CALLED!");
-    console.log("I GOT THESE ANIMALS: ", animals);
   }
 });
 
@@ -2215,6 +2269,35 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AnimalsListComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AnimalsListComponent */ "./resources/js/components/AnimalsListComponent.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2269,106 +2352,6 @@ var form = new Form({
         console.log("SOMETHING WENT WRONG: ", err);
       });
     }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AnimalsSearchComponent.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AnimalsSearchComponent.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['title'],
-  mounted: function mounted() {
-    console.log('I am using the correct component.');
   }
 });
 
@@ -20613,20 +20596,64 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "columns is-multiline" }, [
-      _c("div", { staticClass: "column" }, [
-        _c(
-          "div",
-          { staticClass: "box custom-box" },
-          [_c("animals-list", { attrs: { animals: _vm.animals } })],
-          1
-        )
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c("div", { staticClass: "columns is-multiline" }, [
+        _c("div", { staticClass: "column" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "box custom-box" },
+            [
+              _c("animals-list", {
+                attrs: { animals: _vm.animals },
+                on: { "open-modal": _vm.setModal }
+              })
+            ],
+            1
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("delete-modal", {
+        attrs: {
+          title: _vm.modalTitle,
+          "delete-url": _vm.modalUrl,
+          active: _vm.modalActive,
+          content: _vm.modalContent,
+          "entry-id": _vm.modalId
+        },
+        on: { "close-modal": _vm.toggleModal }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", { staticClass: "hero" }, [
+      _c("div", { staticClass: "hero-body" }, [
+        _c("div", { staticClass: "container has-text-centered" }, [
+          _c("div", { staticClass: "hero-body" }, [
+            _c("p", { staticClass: "customFontColor title is-size-1" }, [
+              _vm._v("The list of all registered animals!")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("h2", { staticClass: "subtitle" }, [
+            _vm._v("See all animals registered in our system.")
+          ])
+        ])
       ])
     ])
-  ])
-}
-var staticRenderFns = []
+  }
+]
 render._withStripped = true
 
 
@@ -20960,96 +20987,108 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("div", { staticClass: "columns is-multiline" }, [
-      _c("div", { staticClass: "column" }, [
-        _c("div", { staticClass: "box custom-box" }, [
-          _c("div", { staticClass: "table-container is-fullwidth" }, [
-            _c(
-              "table",
-              {
-                staticClass: "table table is-striped is-fullwidth is-hoverable"
-              },
-              [
-                _c("thead", [
+  return _c("div", { staticClass: "table-container is-fullwidth" }, [
+    _c("table", { staticClass: "table is-fullwidth is-hoverable" }, [
+      _c("thead", [
+        _c(
+          "tr",
+          { staticClass: "title is-6" },
+          [
+            _c("table-element", { attrs: { "element-type": "th" } }, [
+              _vm._v("Name")
+            ]),
+            _vm._v(" "),
+            _c("table-element", { attrs: { "element-type": "th" } }, [
+              _vm._v("Description")
+            ]),
+            _vm._v(" "),
+            _c("table-element", { attrs: { "element-type": "th" } }, [
+              _vm._v("Species")
+            ]),
+            _vm._v(" "),
+            _c("table-element", { attrs: { "element-type": "th" } }, [
+              _vm._v("Created")
+            ]),
+            _vm._v(" "),
+            _c("table-element", { attrs: { "element-type": "th" } }, [
+              _vm._v("Modified")
+            ]),
+            _vm._v(" "),
+            _c("table-element", { attrs: { "element-type": "th" } })
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.animals, function(animal) {
+          return _c(
+            "tr",
+            { key: animal.id },
+            [
+              _c("table-element", { attrs: { "element-type": "td" } }, [
+                _vm._v(_vm._s(animal.name))
+              ]),
+              _vm._v(" "),
+              _c("table-element", { attrs: { "element-type": "td" } }, [
+                _vm._v(_vm._s(animal.description))
+              ]),
+              _vm._v(" "),
+              _c("table-element", { attrs: { "element-type": "td" } }, [
+                _vm._v(_vm._s(animal.species.name))
+              ]),
+              _vm._v(" "),
+              _c("table-element", { attrs: { "element-type": "td" } }, [
+                _vm._v(_vm._s(animal.created_at))
+              ]),
+              _vm._v(" "),
+              _c("table-element", { attrs: { "element-type": "td" } }, [
+                _vm._v(_vm._s(animal.updated_at))
+              ]),
+              _vm._v(" "),
+              _c("table-element", { attrs: { "element-type": "td" } }, [
+                _c("p", { staticClass: "buttons" }, [
                   _c(
-                    "tr",
-                    { staticClass: "title is-5" },
+                    "a",
+                    {
+                      staticClass: "button is-info is-outlined ",
+                      attrs: { href: "/animal/" + animal.slug + "/edit" }
+                    },
                     [
-                      _c("table-element", { attrs: { "element-type": "th" } }, [
-                        _vm._v("Name")
-                      ]),
-                      _vm._v(" "),
-                      _c("table-element", { attrs: { "element-type": "th" } }, [
-                        _vm._v("Description")
-                      ]),
-                      _vm._v(" "),
-                      _c("table-element", { attrs: { "element-type": "th" } }, [
-                        _vm._v("Species")
-                      ]),
-                      _vm._v(" "),
-                      _c("table-element", { attrs: { "element-type": "th" } }, [
-                        _vm._v("Created")
-                      ]),
-                      _vm._v(" "),
-                      _c("table-element", { attrs: { "element-type": "th" } }, [
-                        _vm._v("Modified")
+                      _c("span", { staticClass: "icon" }, [
+                        _c("i", { staticClass: "fa fa-edit" })
                       ])
-                    ],
-                    1
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button is-danger is-outlined",
+                      on: {
+                        click: function($event) {
+                          return _vm.openDeleteModal(animal)
+                        }
+                      }
+                    },
+                    [
+                      _c("span", { staticClass: "icon" }, [
+                        _c("i", { staticClass: "fa fa-remove" })
+                      ])
+                    ]
                   )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  _vm._l(_vm.animals, function(animal) {
-                    return _c(
-                      "tr",
-                      { key: animal.id },
-                      [
-                        _c(
-                          "table-element",
-                          { attrs: { "element-type": "td" } },
-                          [_vm._v(_vm._s(animal.name))]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "table-element",
-                          { attrs: { "element-type": "td" } },
-                          [_vm._v(_vm._s(animal.description))]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "table-element",
-                          { attrs: { "element-type": "td" } },
-                          [_vm._v(_vm._s(animal.species.name))]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "table-element",
-                          { attrs: { "element-type": "td" } },
-                          [_vm._v(_vm._s(animal.created_at))]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "table-element",
-                          { attrs: { "element-type": "td" } },
-                          [_vm._v(_vm._s(animal.updated_at))]
-                        )
-                      ],
-                      1
-                    )
-                  }),
-                  0
-                )
-              ]
-            )
-          ])
-        ])
-      ])
-    ])
+                ])
+              ])
+            ],
+            1
+          )
+        }),
+        0
+      )
+    ]),
+    _vm._v(" "),
+    _vm._m(0)
   ])
 }
 var staticRenderFns = [
@@ -21057,19 +21096,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("section", { staticClass: "hero" }, [
-      _c("div", { staticClass: "hero-body" }, [
-        _c("div", { staticClass: "container has-text-centered" }, [
-          _c("div", { staticClass: "hero-body" }, [
-            _c("p", { staticClass: "customFontColor title is-size-1" }, [
-              _vm._v("The list of all registered animals!")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("h2", { staticClass: "subtitle" }, [
-            _vm._v("See all animals registered in our system.")
-          ])
-        ])
+    return _c("p", { staticClass: "float-end button is-rounded" }, [
+      _c("a", { staticClass: "has-text-black", attrs: { href: "#" } }, [
+        _c("i", { staticClass: "fas fa-arrow-up" }),
+        _vm._v(" Back to top")
       ])
     ])
   }
@@ -21123,11 +21153,51 @@ var render = function() {
                 { staticClass: "content" },
                 [
                   _vm._t("default", [
-                    _vm._m(1),
-                    _vm._v(" "),
-                    _vm._m(2),
-                    _vm._v(" "),
-                    _vm._m(3)
+                    _c(
+                      "form",
+                      {
+                        staticClass: "field",
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.submit($event)
+                          }
+                        }
+                      },
+                      [
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "control field" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.q,
+                                expression: "form.q"
+                              }
+                            ],
+                            staticClass: "input",
+                            attrs: {
+                              type: "text",
+                              placeholder: "Text input",
+                              id: "q"
+                            },
+                            domProps: { value: _vm.form.q },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.form, "q", $event.target.value)
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(2)
+                      ]
+                    )
                   ])
                 ],
                 2
@@ -21139,100 +21209,14 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "columns is-multiline" }, [
         _c("div", { staticClass: "column" }, [
-          _c("div", { staticClass: "box custom-box" }, [
-            _c("div", { staticClass: "table-container is-fullwidth" }, [
-              _c(
-                "table",
-                {
-                  staticClass:
-                    "table table is-striped is-fullwidth is-hoverable has-text-centered"
-                },
-                [
-                  _c("thead", [
-                    _c(
-                      "tr",
-                      { staticClass: "title is-5" },
-                      [
-                        _c(
-                          "table-element",
-                          { attrs: { "element-type": "th" } },
-                          [_vm._v("Name")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "table-element",
-                          { attrs: { "element-type": "th" } },
-                          [_vm._v("Description")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "table-element",
-                          { attrs: { "element-type": "th" } },
-                          [_vm._v("Species")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "table-element",
-                          { attrs: { "element-type": "th" } },
-                          [_vm._v("Created")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "table-element",
-                          { attrs: { "element-type": "th" } },
-                          [_vm._v("Modified")]
-                        )
-                      ],
-                      1
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "tbody",
-                    _vm._l(_vm.animals, function(animal) {
-                      return _c(
-                        "tr",
-                        { key: animal.id },
-                        [
-                          _c(
-                            "table-element",
-                            { attrs: { "element-type": "td" } },
-                            [_vm._v(_vm._s(animal.name))]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "table-element",
-                            { attrs: { "element-type": "td" } },
-                            [_vm._v(_vm._s(animal.description))]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "table-element",
-                            { attrs: { "element-type": "td" } },
-                            [_vm._v(_vm._s(animal.species.name))]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "table-element",
-                            { attrs: { "element-type": "td" } },
-                            [_vm._v(_vm._s(animal.created_at))]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "table-element",
-                            { attrs: { "element-type": "td" } },
-                            [_vm._v(_vm._s(animal.updated_at))]
-                          )
-                        ],
-                        1
-                      )
-                    }),
-                    0
-                  )
-                ]
+          _vm.hasAnimals
+            ? _c(
+                "div",
+                { staticClass: "box custom-box" },
+                [_c("animals-list", { attrs: { animals: _vm.animals } })],
+                1
               )
-            ])
-          ])
+            : _vm._e()
         ])
       ])
     ])
@@ -21268,13 +21252,6 @@ var staticRenderFns = [
     return _c("div", { staticClass: "field" }, [
       _c("label", { staticClass: "label has-text-white has-text-centered" }, [
         _vm._v("Name of animal")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "control" }, [
-        _c("input", {
-          staticClass: "input",
-          attrs: { type: "text", placeholder: "Text input" }
-        })
       ])
     ])
   },
@@ -21282,30 +21259,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "field" }, [
-      _c("label", { staticClass: "label has-text-white has-text-centered" }, [
-        _vm._v("Select species")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "control" }, [
-        _c("div", { staticClass: "select" }, [
-          _c("select", [
-            _c("option", [_vm._v("Select dropdown")]),
-            _vm._v(" "),
-            _c("option", [_vm._v("With options")])
-          ])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "control" }, [
-      _c("button", { staticClass: "button is-link is-success" }, [
-        _vm._v("Submit")
-      ])
+    return _c("div", { staticClass: "control field" }, [
+      _c(
+        "button",
+        { staticClass: "button is-link is-success", attrs: { type: "submit" } },
+        [_vm._v("Submit")]
+      )
     ])
   }
 ]
@@ -34484,7 +34443,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!************************************************************!*\
   !*** ./resources/js/components/AnimalsSearchComponent.vue ***!
   \************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

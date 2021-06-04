@@ -89,10 +89,13 @@ class SpeciesController extends Controller
      */
     public function update(Request $request, Species $species)
     {
-        return $species->update($request->validate([
+        $species->update($request->validate([
             'name' => 'required',
             'description' => 'required'
         ]));
+
+        return response(['message' => "Species successfully updated!"], 200)
+            ->header('Content-Type', 'application/json');
     }
 
     /**

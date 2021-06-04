@@ -47,11 +47,16 @@ class AnimalController extends Controller
      */
     public function store(Request $request)
     {
-        return Animal::create($request->validate([
+        $animal = Animal::create($request->validate([
             'name' => 'required',
             'description' => 'required',
             'species_id' => 'required|exists:App\Species,id'
         ]));
+
+        $animal->{"message"} = "Animal successfully added!";
+
+        return response($animal, 200)
+            ->header('Content-Type', 'application/json');
     }
 
     /**
@@ -85,11 +90,14 @@ class AnimalController extends Controller
      */
     public function update(Request $request, Animal $animal)
     {
-        return $animal->update($request->validate([
+        $animal->update($request->validate([
             'name' => 'required',
             'description' => 'required',
             'species_id' => 'required|exists:App\Species,id'
         ]));
+
+        return response(['message' => "Animal successfully updated!"], 200)
+            ->header('Content-Type', 'application/json');
     }
 
     /**
