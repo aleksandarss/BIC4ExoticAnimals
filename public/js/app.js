@@ -21633,9 +21633,14 @@ var render = function() {
               _vm._v("Description")
             ]),
             _vm._v(" "),
-            _c("table-element", { attrs: { "element-type": "th" } }, [
-              _vm._v("Animals")
-            ]),
+            _c(
+              "table-element",
+              {
+                staticClass: "is-fixed-width",
+                attrs: { "element-type": "th" }
+              },
+              [_vm._v("Animals")]
+            ),
             _vm._v(" "),
             _c("table-element", { attrs: { "element-type": "th" } }, [
               _vm._v("Created")
@@ -35290,8 +35295,8 @@ var Form = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\Documents\Faks\FH\4_Semester\IE\BIC4ExoticAnimals\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! E:\Documents\Faks\FH\4_Semester\IE\BIC4ExoticAnimals\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\batuh\WebDev\BIC4ExoticAnimals\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\batuh\WebDev\BIC4ExoticAnimals\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

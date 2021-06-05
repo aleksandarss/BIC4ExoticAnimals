@@ -11844,3 +11844,9 @@ div.navbar-dropdown {
   color: #7a7a7a;
 }
 
+/***fixed width for table header***/
+
+.is-fixed-width {
+  width: 90px;
+}
+
